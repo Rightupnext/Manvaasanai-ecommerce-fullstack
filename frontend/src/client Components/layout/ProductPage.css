@@ -1,0 +1,36 @@
+.product-images {
+    text-align: center;
+  }
+  
+  .thumbnail-container {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  
+  .thumbnail {
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+  }
+  
+  .main-image {
+    width: 100%;
+    max-width: 500px;
+    border-radius: 5px;
+  }
+  
+  .quantity-controls {
+    width: 150px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .quantity-controls input {
+    width: 50px;
+    text-align: center;
+  }
+  

@@ -1,0 +1,197 @@
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axiosInstance from "../axios";
+
+export const addProduct = createAsyncThunk(
+  "products/addProduct",
+  async (formData, thunkAPI) => {
+    try {
+      const response = await axiosInstance.post("/api/products", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data || "Something went wrong"
+      );
+    }
+  }
+);
+
+export const getProducts = createAsyncThunk(
+  "products/getProducts",
+  async (_, thunkAPI) => {
+    try {
+      const response = await axiosInstance.get("/api/products");
+      return response.data.products;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data || "Something went wrong"
+      );
+    }
+  }
+);
+
+export const getProduct = createAsyncThunk(
+  "products/getProduct",
+  async (title, thunkAPI) => {
+    try {
+      const response = await axiosInstance.get(`/api/products/${title}`);
+      return response.data.product;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data || "Something went wrong"
+      );
+    }
+  }
+);
+export const deleteProduct = createAsyncThunk(
+  "products/deleteProduct",
+  async (id, thunkAPI) => {
+    try {
+      const response = await axiosInstance.delete(`/api/products/${id}`);
+      return { id, message: response.data.message };
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data || "Something went wrong"
+      );
+    }
+  }
+);
+export const updateProduct = createAsyncThunk(
+  "products/updateProduct",
+  async ({ id, formData }, thunkAPI) => {
+    try {
+      const response = await axiosInstance.put(
+        `/api/products/${id}`,
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+      return response.data.product;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data || "Something went wrong"
+      );
+    }
+  }
+);
+export const getProductsByCategory = createAsyncThunk(
+  "products/getProductsByCategory",
+  async (categoryId, thunkAPI) => {
+    try {
+      const response = await axiosInstance.get(
+        `/api/products/category/${categoryId}`
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data || "Something went wrong"
+      );
+    }
+  }
+);
+
+// Initial state
+const initialState = {
+  products: [],
+  product: null,
+  loading: false,
+  error: null,
+};
+
+// Product slice
+const productSlice = createSlice({
+  name: "products",
+  initialState,
+  reducers: {
+    clearError: (state) => {
+      state.error = null;
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      // Add product
+      .addCase(addProduct.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(addProduct.fulfilled, (state, action) => {
+        state.loading = false;
+        state.products.push(action.payload.product);
+      })
+      .addCase(addProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      // Get all products
+      .addCase(getProducts.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getProducts.fulfilled, (state, action) => {
+        state.loading = false;
+        state.products = action.payload;
+      })
+      .addCase(getProducts.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      // Get product by ID
+      .addCase(getProduct.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getProduct.fulfilled, (state, action) => {
+        state.loading = false;
+        state.product = action.payload;
+      })
+      .addCase(getProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      // Update product
+      .addCase(updateProduct.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateProduct.fulfilled, (state, action) => {
+        state.loading = false;
+        const index = state.products.findIndex(
+          (product) => product._id === action.payload._id
+        );
+        if (index !== -1) {
+          state.products[index] = action.payload;
+        }
+      })
+      .addCase(updateProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      // Delete product
+      .addCase(deleteProduct.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteProduct.fulfilled, (state, action) => {
+        state.loading = false;
+        state.products = state.products.filter(
+          (product) => product._id !== action.payload.id
+        );
+      })
+      .addCase(deleteProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      // Get products by category
+      .addCase(getProductsByCategory.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getProductsByCategory.fulfilled, (state, action) => {
+        state.loading = false;
+        state.products = action.payload; // Set products from the API response
+      })
+      .addCase(getProductsByCategory.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
+  },
+});
+export default productSlice.reducer;
