@@ -1,5 +1,10 @@
 const mongoose = require("mongoose");
-
+const nutrientSchema = new mongoose.Schema({
+  nutrientName: { type: String,  },
+  valuePer100g: { type: Number, },
+  valuePerServing: { type: Number, },
+  dvPercent: { type: Number,  },
+});
 const productSchema = new mongoose.Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
@@ -18,6 +23,7 @@ const productSchema = new mongoose.Schema({
     ref: "Category",
     required: true,
   },
+  nutrients: [nutrientSchema],
   reviews: [
     {
       user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-
 export default function FeedBackForm() {
   const [formData, setFormData] = useState({
     name: "",
@@ -28,149 +27,91 @@ export default function FeedBackForm() {
   };
 
   return (
-    <div className="container mt-5">
-      <div className="row justify-content-center">
-        <div className="col-md-8 col-lg-6">
-          <h2 className="mb-4 text-center">Customer Testimonial</h2>
-          <p className="text-center">
-            We would love to hear about your experience with our service!
-          </p>
-          <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <label className="form-label">Name</label>
-              <input
-                type="text"
-                className="form-control"
-                name="name"
-                placeholder="Your full name"
-                value={formData.name}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className="mb-3">
-              <label className="form-label">Email Address</label>
-              <input
-                type="email"
-                className="form-control"
-                name="email"
-                placeholder="example@domain.com"
-                value={formData.email}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className="mb-3">
-              <label className="form-label">Your Testimonial</label>
-              <textarea
-                className="form-control"
-                name="testimonial"
-                placeholder="Share your experience with us..."
-                value={formData.testimonial}
-                onChange={handleChange}
-              ></textarea>
-            </div>
-
-            <div className="mb-3 text-center">
-              <label className="form-label">Overall Rating</label>
-              <div>
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <span
-                    key={star}
-                    style={{
-                      fontSize: "1.8rem",
-                      cursor: "pointer",
-                      color: star <= formData.rating ? "gold" : "gray",
-                    }}
-                    onClick={() => setFormData({ ...formData, rating: star })}
-                  >
-                    ★
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="mb-3">
-              <label className="form-label">Date of Experience</label>
-              <input
-                type="date"
-                className="form-control"
-                name="date"
-                value={formData.date}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className="mb-3 text-center">
-              <label className="form-label">Satisfaction Level</label>
-              <div>
-                {[1, 2, 3, 4, 5].map((level) => (
-                  <span
-                    key={level}
-                    style={{
-                      fontSize: "2rem",
-                      marginRight: "10px",
-                      cursor: "pointer",
-                      color:
-                        level === formData.satisfaction ? "green" : "black",
-                    }}
-                    onClick={() =>
-                      setFormData({ ...formData, satisfaction: level })
-                    }
-                  >
-                    {["😡", "😞", "😐", "😊", "😁"][level - 1]}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="mb-3">
-              <label className="form-label">Would you recommend us?</label>
-              <div>
-                <input
-                  type="radio"
-                  name="recommend"
-                  value="yes"
-                  checked={formData.recommend}
-                  onChange={() => setFormData({ ...formData, recommend: true })}
-                />{" "}
-                Yes
-                <input
-                  type="radio"
-                  name="recommend"
-                  value="no"
-                  className="ms-3"
-                  checked={!formData.recommend}
-                  onChange={() =>
-                    setFormData({ ...formData, recommend: false })
-                  }
-                />{" "}
-                No
-              </div>
-            </div>
-
-            <div className="mb-3 form-check">
-              <input
-                type="checkbox"
-                className="form-check-input"
-                name="consent"
-                checked={formData.consent}
-                onChange={handleChange}
-              />
-              <label className="form-check-label">
-                I consent to the use of my testimonial as outlined in the terms
-                and conditions.
-              </label>
-            </div>
-
-            <div className="text-center">
-              <button type="submit" className="btn btn-primary px-5">
-                Submit
-              </button>
-            </div>
-          </form>
+    <>
+      <form className="max-w-md mx-auto mt-16 p-4 bg-white shadow rounded">
+        <h2 className="text-2xl font-bold mb-4">Feedback Form</h2>
+        <div className="mb-4">
+          <label htmlFor="name" className="block mb-1">
+            Name
+          </label>
+          <input
+            type="text"
+            id="name"
+            className="w-full py-2 px-4 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
         </div>
-      </div>
-    </div>
+        <div className="mb-4">
+          <label htmlFor="email" className="block mb-1">
+            Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            className="w-full py-2 px-4 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block mb-1">Rating</label>
+          <div className="flex items-center space-x-2">
+            <input
+              type="radio"
+              name="rating"
+              id="rating1"
+              defaultValue={1}
+              className="focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <label htmlFor="rating1">1</label>
+            <input
+              type="radio"
+              name="rating"
+              id="rating2"
+              defaultValue={2}
+              className="focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <label htmlFor="rating2">2</label>
+            <input
+              type="radio"
+              name="rating"
+              id="rating3"
+              defaultValue={3}
+              className="focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <label htmlFor="rating3">3</label>
+            <input
+              type="radio"
+              name="rating"
+              id="rating4"
+              defaultValue={4}
+              className="focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <label htmlFor="rating4">4</label>
+            <input
+              type="radio"
+              name="rating"
+              id="rating5"
+              defaultValue={5}
+              className="focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <label htmlFor="rating5">5</label>
+          </div>
+        </div>
+        <div className="mb-4">
+          <label htmlFor="message" className="block mb-1">
+            Message
+          </label>
+          <textarea
+            id="message"
+            className="w-full py-2 px-4 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            defaultValue={""}
+          />
+        </div>
+        <button
+          type="submit"
+          className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          Submit
+        </button>
+      </form>
+    </>
   );
 }

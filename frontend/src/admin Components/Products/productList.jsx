@@ -57,7 +57,7 @@ const ProductList = () => {
               ))}
             </div>
 
-            <Link to={`/products/edit/${product._id}`}>Edit</Link>
+            <Link to={`edit/${product._id}`}>Edit</Link>
             <button onClick={() => handleDeleteProduct(product._id)}>Delete</button>
           </li>
         ))}
