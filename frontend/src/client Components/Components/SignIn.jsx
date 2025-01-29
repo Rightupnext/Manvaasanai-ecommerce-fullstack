@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../store/reducers/userReducers";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 export default function SignIn() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { status, error } = useSelector((state) => state.auth.loginUser);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [termsAccepted, setTermsAccepted] = useState(false);
@@ -13,7 +15,11 @@ export default function SignIn() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!termsAccepted) {
-      alert("You must accept the terms and conditions to register.");
+      Swal.fire({
+        icon: "warning",
+        title: "Terms & Conditions",
+        text: "You must accept the terms and conditions to log in.",
+      });
       return;
     }
 
@@ -21,6 +27,31 @@ export default function SignIn() {
     dispatch(loginUser(loginData));
   };
 
+  // Handle navigation based on authentication status
+  useEffect(() => {
+    if (status === "success") {
+      const role = localStorage.getItem("role");
+      Swal.fire({
+        icon: "success",
+        title: "Login Successful",
+        text: `Welcome ${role === "admin" ? "Admin" : "User"}!`,
+        timer: 2000,
+        showConfirmButton: false,
+      }).then(() => {
+        navigate(role === "admin" ? "/dashboard" : "/");
+      });
+
+      setEmail("");
+      setPassword("");
+      setTermsAccepted(false);
+    } else if (status === "error" && error) {
+      Swal.fire({
+        icon: "error",
+        title: "Login Failed",
+        text: error,
+      });
+    }
+  }, [status, error, navigate]);
   return (
     <div className="py-16">
       <div className="flex bg-white rounded-lg shadow-lg overflow-hidden mx-auto max-w-sm lg:max-w-4xl">

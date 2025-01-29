@@ -24,6 +24,7 @@
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.0.2",
     "react-transition-group": "^4.4.5",
+    "sweetalert2": "^11.15.10",
     "tailwind-merge": "^2.5.5"
   },
   "devDependencies": {

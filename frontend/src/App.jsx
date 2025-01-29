@@ -26,12 +26,12 @@ import CategoryProductPage from "./admin Components/Category/CategoryProductPage
 import ProductsList from "./admin Components/Products/productList";
 import ProductsForm from "./admin Components/Products/ProductForm";
 import ParentChart from "./partials/dashboard/ParentChart";
+import CheckOutForm from "./client Components/layout/CheckOutForm";
 
 function App() {
   const location = useLocation();
   const navigate = useNavigate();
-  const [isAuthenticated, setIsAuthenticated] = useState(null);
-
+  const [isAuthenticated, setIsAuthenticated] = useState("client");
   useEffect(() => {
     document.querySelector("html").style.scrollBehavior = "auto";
     window.scroll({ top: 0 });
@@ -39,12 +39,12 @@ function App() {
   }, [location.pathname]);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const role = localStorage.getItem("role");
 
-    if (token) {
-      setIsAuthenticated(true);
+    if (role === "admin") {
+      setIsAuthenticated("admin");
     } else {
-      setIsAuthenticated(false);
+      setIsAuthenticated("client");
     }
   }, []);
 
@@ -58,22 +58,25 @@ function App() {
   }, [isAuthenticated, navigate, location.pathname]);
 
   return (
-    <> {isAuthenticated === false ? (
-      <Navbar />):""}
+    <>
+      {" "}
+      {isAuthenticated === "client" ? <Navbar /> : ""}
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<Home />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/checkoutform" element={<CheckOutForm />} />
 
         {/* Public Layout */}
         <Route path="/" element={<Layout />}>
           <Route path="products" element={<ProductDisplay />} />
           <Route path="products/:title" element={<ProductPage />} />
+          <Route path="checkoutform" element={<CheckOutForm />} />
         </Route>
 
         {/* Protected Dashboard Route */}
-        {isAuthenticated === true ? (
+        {isAuthenticated === "admin" ? (
           <Route path="/dashboard" element={<DashboardLayout />}>
             <Route index element={<ParentChart />} />
             <Route path="category" element={<CategoryList />} />
@@ -84,7 +87,7 @@ function App() {
             <Route path="products/edit/:id" element={<ProductsForm />} />
           </Route>
         ) : (
-          isAuthenticated === false && (
+          isAuthenticated === "client" && (
             <Route path="/dashboard" element={<Navigate to="/" />} />
           )
         )}
