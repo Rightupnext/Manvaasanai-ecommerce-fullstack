@@ -81,6 +81,7 @@ function App() {
             <Route path="category/filter" element={<CategoryProductPage />} />
             <Route path="products" element={<ProductsList />} />
             <Route path="products/add" element={<ProductsForm />} />
+            <Route path="products/edit/:id" element={<ProductsForm />} />
           </Route>
         ) : (
           isAuthenticated === false && (

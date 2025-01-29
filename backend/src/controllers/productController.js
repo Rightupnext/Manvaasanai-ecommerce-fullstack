@@ -37,7 +37,14 @@ exports.addProduct = async (req, res) => {
       offer,
       packSize,
       available,
+      nutrients, // Receiving nutrients as an array
     } = req.body;
+
+    // Parse nutrients JSON if sent as a string
+    let parsedNutrients = [];
+    if (nutrients) {
+      parsedNutrients = JSON.parse(nutrients); // Convert string to array if needed
+    }
 
     // Check if files are provided
     if (!req.files || req.files.length === 0) {
@@ -47,29 +54,19 @@ exports.addProduct = async (req, res) => {
     // Upload images to GridFS
     const uploadPromises = req.files.map((file) => {
       return new Promise((resolve, reject) => {
-        const filename = `${crypto
-          .randomBytes(16)
-          .toString("hex")}${path.extname(file.originalname)}`;
+        const filename = `${crypto.randomBytes(16).toString("hex")}${path.extname(file.originalname)}`;
         const uploadStream = gridFSBucket.openUploadStream(filename, {
           contentType: file.mimetype,
         });
 
         uploadStream.end(file.buffer);
 
-        uploadStream.on("finish", () => {
-          console.log(`File uploaded successfully: ${filename}`);
-          resolve(filename); // Resolve with the uploaded filename
-        });
-
-        uploadStream.on("error", (err) => {
-          console.error("Error uploading file:", err);
-          reject(err); // Reject on error
-        });
+        uploadStream.on("finish", () => resolve(filename));
+        uploadStream.on("error", (err) => reject(err));
       });
     });
 
     const images = await Promise.all(uploadPromises); // Wait for all uploads to finish
-    console.log("Uploaded Images:", images);
 
     // Create a new product with the uploaded images
     const newProduct = new Product({
@@ -81,20 +78,22 @@ exports.addProduct = async (req, res) => {
       packSize,
       available,
       category,
-      image: images, // Store the image filenames
+      image: images,
+      nutrients: parsedNutrients, // Save dynamic nutrients array
     });
 
     const savedProduct = await newProduct.save();
-    console.log("Saved Product:", savedProduct);
 
-    res
-      .status(201)
-      .json({ message: "Product created successfully", product: savedProduct });
+    res.status(201).json({
+      message: "Product created successfully",
+      product: savedProduct,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: error.message });
   }
 };
+
 
 exports.getProducts = async (req, res) => {
   try {
@@ -203,7 +202,17 @@ exports.getProduct = async (req, res) => {
 exports.updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, description, category, price, discountprice, offer, packSize, available } = req.body;
+    const { 
+      title, 
+      description, 
+      category, 
+      price, 
+      discountprice, 
+      offer, 
+      packSize, 
+      available, 
+      nutrients 
+    } = req.body;
 
     // Find the product by ID
     const product = await Product.findById(id);
@@ -211,7 +220,7 @@ exports.updateProduct = async (req, res) => {
       return res.status(404).json({ message: "Product not found" });
     }
 
-    // Update fields
+    // Update basic product fields
     product.title = title || product.title;
     product.description = description || product.description;
     product.category = category || product.category;
@@ -220,6 +229,15 @@ exports.updateProduct = async (req, res) => {
     product.offer = offer || product.offer;
     product.packSize = packSize || product.packSize;
     product.available = available || product.available;
+
+    // Update nutrients only if provided
+    if (nutrients) {
+      try {
+        product.nutrients = JSON.parse(nutrients); // Convert string to array
+      } catch (error) {
+        return res.status(400).json({ message: "Invalid nutrients format" });
+      }
+    }
 
     // Update images if new ones are provided
     if (req.files && req.files.length > 0) {
@@ -232,36 +250,25 @@ exports.updateProduct = async (req, res) => {
 
           uploadStream.end(file.buffer);
 
-          uploadStream.on("finish", () => {
-            console.log(`File uploaded successfully: ${filename}`);
-            resolve(filename); // Resolve with the uploaded filename
-          });
-
-          uploadStream.on("error", (err) => {
-            console.error("Error uploading file:", err);
-            reject(err); // Reject on error
-          });
+          uploadStream.on("finish", () => resolve(filename));
+          uploadStream.on("error", (err) => reject(err));
         });
       });
 
-      // Wait for all uploads to finish and retrieve the filenames
       const images = await Promise.all(uploadPromises);
-      console.log("Uploaded Images:", images);
-
-      // Update the product's image field with the new images
-      product.image = images;
+      product.image = images; // Replace with new images
     }
 
     // Save the updated product
     const updatedProduct = await product.save();
-    console.log("Updated Product:", updatedProduct);
-
+    
     res.json({ message: "Product updated successfully", product: updatedProduct });
   } catch (error) {
     console.error("Error updating product:", error);
     res.status(500).json({ error: error.message });
   }
 };
+
 
 // Controller to delete a product by ID
 exports.deleteProduct = async (req, res) => {

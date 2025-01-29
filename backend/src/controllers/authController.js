@@ -34,11 +34,16 @@ exports.login = async (req, res) => {
     }
 
     const token = jwt.sign({ id: user._id, role: user.role }, SECRET_KEY, { expiresIn: '1d' });
-    res.json({ token });
+
+    res.json({ 
+      token,
+      role: user.role // Sending the role in the response
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
+
 
 // Forget Password
 exports.forgetPassword = async (req, res) => {
