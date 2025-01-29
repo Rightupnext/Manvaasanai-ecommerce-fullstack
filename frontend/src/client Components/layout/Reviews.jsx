@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import FeedBackForm from "./FeedBackForm";
 
-function Reviews({ reviewShow, toggleReview }) {
+function Reviews() {
+  const [reviewShow, setReviewShow] = useState(false);
+  const toggleReview = () => {
+    setReviewShow((prev) => !prev);
+  };
   return (
     <>
       <section className="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">

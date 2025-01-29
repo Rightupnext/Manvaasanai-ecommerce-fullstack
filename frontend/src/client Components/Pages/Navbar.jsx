@@ -1,47 +1,21 @@
 import React, { useState, useEffect } from "react";
 import logo from "../../images/assets/brahmmis logo recreate.png";
 import { FaCartArrowDown } from "react-icons/fa";
-import {Link} from 'react-router-dom'
+import { Link } from "react-router-dom";
+
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("");
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = document.querySelectorAll("section");
-      let scrollPosition = window.scrollY + 100; // Offset for fixed navbar
-
-      sections.forEach((section) => {
-        const sectionId = section.getAttribute("id");
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.offsetHeight;
-
-        if (
-          scrollPosition >= sectionTop &&
-          scrollPosition < sectionTop + sectionHeight
-        ) {
-          setActiveSection(sectionId);
-        }
-      });
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
   return (
     <header className="shadow sticky top-0 bg-gray-50 z-50 w-full">
       <div className="relative flex max-w-screen-xl flex-col overflow-hidden pt-2 md:mx-auto md:flex-row md:items-center">
         {/* Logo */}
-        <a
-          href="#"
+        <Link
+          to="/"
           className="flex items-center whitespace-nowrap text-2xl font-black"
         >
           <img
@@ -52,7 +26,7 @@ function Navbar() {
             data-aos-duration="3000"
             style={{ width: "120px" }}
           />
-        </a>
+        </Link>
 
         {/* Thirukural Text (Hidden on tablets and below) */}
         <div className="hidden lg:flex w-full flex-grow font-bold -translate-x-20 text-green-600 text-md justify-center items-center">
@@ -93,29 +67,29 @@ function Navbar() {
         >
           <ul className="flex flex-col items-center space-y-2 md:ml-auto md:flex-row md:space-y-0 md:space-x-6 w-full ">
             {[
-              { id: "home", label: "Home", link: "#" },
-              { id: "about-us", label: "About Us", link: "#about-us" },
-              { id: "our-menu", label: "Our Menu", link: "#our-menu" },
-              // { id: "specialty", label: "Specialty", link: "#specialty" },
-              { id: "contact", label: "Contact Us", link: "#contact" },
-              { id: "contact", label: <FaCartArrowDown  style={{width:"32",height:"22"}}/>, link: "#contact" },
+              { label: "Home", link: "/" },
+              { label: "About Us", link: "/about-us" },
+              { label: "Our Menu", link: "/our-menu" },
+              { label: "Contact Us", link: "/contact" },
+              {
+                label: (
+                  <FaCartArrowDown style={{ width: "32", height: "22" }} />
+                ),
+                link: "/cart",
+              },
             ].map((item, index) => (
               <li
-                key={item.id}
-                className={`text-black md:text-base ${
-                  activeSection === item.id
-                    ? " text-[#3933] font-bold"
-                    : "hover:text-green-600"
-                }`}
+                key={index}
+                className="text-black md:text-base hover:text-green-600"
                 data-aos="fade-down"
                 data-aos-duration={`${400 + index * 200}`}
               >
-                <a
-                  href={item.link}
+                <Link
+                  to={item.link}
                   className="no-underline transition-all duration-300"
                 >
                   {item.label}
-                </a>
+                </Link>
               </li>
             ))}
             <li
@@ -124,8 +98,7 @@ function Navbar() {
               data-aos-duration="1400"
             >
               <Link
-              to="/signin"
-               
+                to="/signin"
                 className="bg-gray-600 text-white py-2 px-4 rounded-lg no-underline"
               >
                 Login
