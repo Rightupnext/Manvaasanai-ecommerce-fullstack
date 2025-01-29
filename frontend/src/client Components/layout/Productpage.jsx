@@ -6,6 +6,7 @@ import { getProduct } from "../../store/reducers/productReducers";
 import "./ProductPage.css";
 import FeedBackForm from "./FeedBackForm";
 import Reviews from "./Reviews";
+import Tabs from "./Tabs";
 
 const ProductPage = () => {
   const { title } = useParams();
@@ -13,7 +14,6 @@ const ProductPage = () => {
   const { product, loading, error } = useSelector((state) => state.products);
 
   const [selectedImage, setSelectedImage] = useState(null);
-  const [reviewShow, setReviewShow] = useState(false);
 
   useEffect(() => {
     dispatch(getProduct(title));
@@ -32,9 +32,6 @@ const ProductPage = () => {
   const getImageURL = (filename) =>
     `http://localhost:5000/api/products/images/${filename}`;
 
-  const toggleReview = () => {
-    setReviewShow((prev) => !prev);
-  };
   return (
     <>
       <div className="font-[sans-serif] p-4 bg-white">
@@ -269,7 +266,7 @@ const ProductPage = () => {
                     />
                   </svg>
                   <p className="text-gray-500 text-xs sm:text-sm mt-3">
-                    15-Day Return Policy
+                    15-Day Freshness Guarantee
                   </p>
                 </div>
                 <div className="text-center">
@@ -304,7 +301,7 @@ const ProductPage = () => {
 
         {/* Feedback Form */}
         <div className="mt-6">
-          <Reviews toggleReview={toggleReview} reviewShow={reviewShow} />
+          <Tabs product={product}/>
         </div>
       </div>
     </>
