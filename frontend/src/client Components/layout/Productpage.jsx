@@ -35,10 +35,9 @@ const ProductPage = () => {
   const toggleReview = () => {
     setReviewShow((prev) => !prev);
   };
-
   return (
     <>
-      <div className="font-[sans-serif] p-4 bg-gray-100">
+      <div className="font-[sans-serif] p-4 bg-white">
         <div className="lg:max-w-6xl max-w-xl mx-auto">
           <div className="grid items-start grid-cols-1 lg:grid-cols-2 gap-8 max-lg:gap-12 max-sm:gap-8">
             <div className="w-full lg:sticky top-0">
@@ -302,21 +301,10 @@ const ProductPage = () => {
             </div>
           </div>
         </div>
-        {/* Review Section */}
-        <div className="mt-6">
-          <button
-            onClick={toggleReview}
-            className="text-purple-600 font-semibold text-sm"
-          >
-            {reviewShow ? "Cancel Reviews" : "Write Reviews"}
-          </button>
-          {reviewShow && <FeedBackForm /> }
-        </div>
 
         {/* Feedback Form */}
         <div className="mt-6">
-         
-          <Reviews />
+          <Reviews toggleReview={toggleReview} reviewShow={reviewShow} />
         </div>
       </div>
     </>
