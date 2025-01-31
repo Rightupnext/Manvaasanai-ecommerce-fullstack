@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FaRegEyeSlash } from "react-icons/fa";
+import logo from "../../images/assets/brahmmis logo recreate.png"
 import { registerUser } from "../../store/reducers/userReducers";
 import { Link } from "react-router-dom";
 
@@ -43,18 +44,16 @@ export default function SignUp() {
   return (
     <div className="py-16">
       <div className="flex bg-white rounded-lg shadow-lg overflow-hidden mx-auto max-w-sm lg:max-w-4xl">
-        <div
-          className="hidden lg:block lg:w-1/2 bg-cover"
-          style={{
-            backgroundImage:
-              'url("https://images.unsplash.com/photo-1546514714-df0ccc50d7bf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=667&q=80")',
-          }}
-        ></div>
+      <div className="hidden lg:flex lg:w-1/2 items-center justify-center bg-gray-100">
+  <img src={logo} alt="Brahmmis Logo" className="w-44" />
+</div>
+
         <div className="w-full p-8 lg:w-1/2">
-          <h2 className="text-2xl font-semibold text-gray-700 text-center">
-            Brand
-          </h2>
-          <p className="text-xl text-gray-600 text-center">Welcome back!</p>
+        <div className="hidden lg:flex lg:w-1/2 align-items-center items-center justify-center bg-gray-100">
+          <img src={logo} alt="Brahmmis Logo" style={{ width: "30%" }} />
+        </div>
+
+
 
           <form onSubmit={handleSubmit}>
             <div className="mt-4">
@@ -62,7 +61,7 @@ export default function SignUp() {
                 Name
               </label>
               <input
-                className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+                className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-3 block w-full appearance-none"
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -74,7 +73,7 @@ export default function SignUp() {
                 Email Address
               </label>
               <input
-                className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+                className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-3 block w-full appearance-none"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -87,42 +86,52 @@ export default function SignUp() {
                   Password
                 </label>
                 <Link to="/forgot-password" className="text-xs text-gray-500">
-                  Forget Password?
+                  Forgot Password?
                 </Link>
               </div>
-              <input
-                className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
-                value={password}
-                type={passwordVisible ? "text" : "password"}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-              <FaRegEyeSlash
-                style={{ width: "20px" }}
-                onClick={() => setPasswordVisible(!passwordVisible)}
-              />
+
+                <div className="relative">
+                  <input
+                    className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-3 pr-10 block w-full appearance-none"
+                    value={password}
+                    type={passwordVisible ? "text" : "password"}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                  <FaRegEyeSlash
+                    className="absolute right-3 top-3 cursor-pointer text-gray-500"
+                    style={{ width: "20px", height: "20px" }}
+                    onClick={() => setPasswordVisible(!passwordVisible)}
+                  />
+                </div>
             </div>
+
             <div className="mt-4">
               <div className="flex justify-between">
                 <label className="block text-gray-700 text-sm font-bold mb-2">
                   Confirm Password
                 </label>
                 <Link to="/forgot-password" className="text-xs text-gray-500">
-                  Forget Password?
+                  Forgot Password?
                 </Link>
               </div>
-              <input
-                className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
-                value={cpassword}
-                onChange={(e) => setCPassword(e.target.value)}
-                type={cpasswordVisible ? "text" : "password"}
-                required
-              />
-              <FaRegEyeSlash
-                style={{ width: "20px" }}
-                onClick={() => setCPasswordVisible(!cpasswordVisible)}
-              />
+
+              <div className="relative">
+                <input
+                  className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-3 pr-10 block w-full appearance-none"
+                  value={cpassword}
+                  type={cpasswordVisible ? "text" : "password"}
+                  onChange={(e) => setCPassword(e.target.value)}
+                  required
+                />
+                <FaRegEyeSlash
+                  className="absolute right-3 top-3 cursor-pointer text-gray-500"
+                  style={{ width: "20px", height: "20px" }}
+                  onClick={() => setCPasswordVisible(!cpasswordVisible)}
+                />
+              </div>
             </div>
+
             <div className="form-check d-flex justify-content-center mb-5">
               <input
                 className="form-check-input me-2"
@@ -131,18 +140,22 @@ export default function SignUp() {
                 onChange={() => setTermsAccepted(!termsAccepted)}
                 id="form2Example3cg"
               />
-              <label className="form-check-label" htmlFor="form2Example3g">
+              <label className="form-check-label text-black-500 hover:text-blue-700 text-xs" htmlFor="form2Example3g">
                 I agree to the{" "}
-                <a href="#!" className="text-body">
-                  <u>Terms of service</u>
+                <a 
+                  href="#!" 
+                  className="text-blue-500 hover:text-blue-700 text-xs"
+                >
+                  <u>Terms & Conditions</u>
                 </a>
+
               </label>
             </div>
             <div className="mt-8">
               <button
                 type="submit"
                 disabled={status === "pending" || !termsAccepted}
-                className="bg-gray-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-gray-600"
+                className="bg-gray-700 text-white font-bold py-1 px-3 w-full rounded hover:bg-gray-600"
               >
                 {status === "pending" ? "Registering..." : "Sign Up"}
               </button>

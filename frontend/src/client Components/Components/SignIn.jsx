@@ -74,7 +74,7 @@ export default function SignIn() {
                 Email Address
               </label>
               <input
-                className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+                className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-3 block w-full appearance-none"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -91,7 +91,7 @@ export default function SignIn() {
                 </Link>
               </div>
               <input
-                className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+                className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-3 block w-full appearance-none"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -106,18 +106,22 @@ export default function SignIn() {
                 onChange={() => setTermsAccepted(!termsAccepted)}
                 id="form2Example3cg"
               />
-              <label className="form-check-label" htmlFor="form2Example3g">
+              <label className="form-check-label text-black-500 hover:text-blue-700 text-xs" htmlFor="form2Example3g">
                 I agree to the{" "}
-                <a href="#!" className="text-body">
-                  <u>Terms of service</u>
+                <a 
+                  href="#!" 
+                  className="text-blue-500 hover:text-blue-700 text-xs"
+                >
+                  <u>Terms & Conditions</u>
                 </a>
+
               </label>
             </div>
             <div className="mt-8">
               <button
                 type="submit"
                 disabled={status === "pending" || !termsAccepted}
-                className="bg-gray-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-gray-600"
+                className="bg-gray-700 text-white font-bold py-1 px-3 w-full rounded hover:bg-gray-600"
               >
                 {status === "pending" ? "Logging in..." : "Sign In"}
               </button>
