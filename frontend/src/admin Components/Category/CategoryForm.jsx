@@ -41,20 +41,34 @@ const CategoryForm = () => {
 
   return (
     <div>
-      <h2>{id ? "Update Category" : "Add Category"}</h2>
+    <h2 className="font-bold text-xl">{id ? "Update Category" : "Add Category"}</h2>
+
       <form onSubmit={handleSubmit}>
-        <label>
-          Name:
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-        </label>
-        <button type="submit" disabled={loading}>
-          {loading ? "Saving..." : id ? "Update" : "Add"}
-        </button>
+      <div className="flex items-center space-x-4 w-1/2">
+  <div className="flex-1">
+    <label className="mb-2 mt-2 text-sl block">Name</label>
+    <input
+      type="text"
+      value={name}
+      onChange={(e) => setName(e.target.value)}
+      required
+      placeholder="Enter name"
+      className="px-4 py-1.5 text-sm rounded-md bg-white border border-gray-400 w-full outline-blue-500"
+    />
+  </div>
+
+  <button
+    type="submit"
+    disabled={loading}
+    className={`mt-10 px-4 py-1.5 rounded-lg text-white font-semibold ${
+      loading ? "bg-blue-300 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"
+    }`}
+  >
+    {loading ? "Saving..." : id ? "Update" : "Add"}
+  </button>
+</div>
+
+
       </form>
       {error && <p>{error}</p>}
     </div>

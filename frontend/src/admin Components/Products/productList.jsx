@@ -27,42 +27,65 @@ const ProductList = () => {
 
   return (
     <div>
-      <h1>Product List</h1>
-      {productsLoading && <p>Loading products...</p>}
-      {productsError && <p>{productsError}</p>}
-      {categoriesLoading && <p>Loading categories...</p>}
-      {categoriesError && <p>{categoriesError}</p>}
+    <h3 className="mb-3 mt-2 font-bold text-xl">Product List</h3>
+    {productsLoading && <p>Loading products...</p>}
+    {productsError && <p>{productsError}</p>}
+    {categoriesLoading && <p>Loading categories...</p>}
+    {categoriesError && <p>{categoriesError}</p>}
+  
+    <ul>
+      {products.map((product, index) => (
+        <li key={product._id} className="mb-6">
+        <div className="space-y-2">
+          <h3 className="text-black font-medium">Title: <span className="text-gray-600">{product.title}</span></h3>
+          <h3 className="text-black font-medium">Price: <span className="text-gray-600">{product.price}</span></h3>
+          <h3 className="text-black font-medium">Discount Price: <span className="text-gray-600">{product.discountprice}</span></h3>
+          <h3 className="text-black font-medium">Description: <span className="text-gray-600">{product.description}</span></h3>
+          <h3 className="text-black font-medium">Offer: <span className="text-gray-600">{product.offer}</span></h3>
+          <h3 className="text-black font-medium">Pack Size: <span className="text-gray-600">{product.packSize}</span></h3>
+          <h3 className="text-black font-medium">Available: <span className="text-gray-600">{product.available}</span></h3>
+          <p className="text-black font-medium">
+            Category: <span className="text-gray-600">{categories.find((cat) => cat._id === product.category)?.name || "N/A"}</span>
+          </p>
+        </div>
 
-      <ul>
-        {products.map((product) => (
-          <li key={product._id}>
-            <h3>Title: {product.title}</h3>
-            <h3>Price: {product.price}</h3>
-            <h3>DiscountPrice: {product.discountprice}</h3>
-            <h3>Description: {product.description}</h3>
-            <h3>offer: {product.offer}</h3>
-            <h3>packSize: {product.packSize}</h3>
-            <h3>available: {product.available}</h3>
-            <p>Category: {categories.find((cat) => cat._id === product.category)?.name || "N/A"}</p>
-
-            <div>
-              <h4>Images:</h4>
+          <div>
+            <h4 className="font-semibold mb-2">Images:</h4>
+            <div className="flex flex-wrap gap-3">
               {product.image.map((filename, index) => (
                 <img
                   key={index}
                   src={getImageURL(filename)}
                   alt={`Product ${index + 1}`}
-                  style={{ width: "100px", height: "100px", marginRight: "10px" }}
+                  className="w-24 h-24 object-cover rounded-md border border-gray-300"
                 />
               ))}
             </div>
-
-            <Link to={`edit/${product._id}`}>Edit</Link>
-            <button onClick={() => handleDeleteProduct(product._id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
-    </div>
+          </div>
+  
+          <div className="flex items-center gap-3">
+            <Link 
+              to={`edit/${product._id}`} 
+              className="mt-3 px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+            >
+              Edit
+            </Link>
+            
+            <button 
+              onClick={() => handleDeleteProduct(product._id)} 
+              className="mt-3 px-3 py-1 bg-red-500 text-white rounded-md hover:bg-red-600"
+            >
+              Delete
+            </button>
+          </div>
+  
+          {/* Horizontal Line After Each Product */}
+          {index !== products.length - 1 && <hr className="my-5 border-t border-gray-300" />}
+        </li>
+      ))}
+    </ul>
+  </div>
+  
   );
 };
 
