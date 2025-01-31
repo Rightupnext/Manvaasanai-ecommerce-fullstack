@@ -65,7 +65,7 @@ function Dashboard() {
             </div>
 
             {/* Cards */}
-            <div className="grid grid-cols-12 gap-6">
+            {/* <div className="grid grid-cols-12 gap-6"> */}
 
              
               {/* <DashboardCard01 />
@@ -95,7 +95,7 @@ function Dashboard() {
               <DashboardCard13 /> */}
               <Outlet/>
               
-            </div>
+            {/* </div> */}
 
           </div>
         </main>
