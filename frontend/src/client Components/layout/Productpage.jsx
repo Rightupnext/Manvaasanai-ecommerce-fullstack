@@ -93,7 +93,7 @@ const ProductPage = () => {
                   <div className="flex items-center gap-1">
                     <p className="text-base text-gray-500">4</p>
                     <svg
-                      className="w-4 h-4 fill-purple-600"
+                      className="w-4 h-4 fill-yellow-600"
                       viewBox="0 0 14 13"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
@@ -101,7 +101,7 @@ const ProductPage = () => {
                       <path d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z" />
                     </svg>
                     <svg
-                      className="w-4 h-4 fill-purple-600"
+                      className="w-4 h-4 fill-yellow-600"
                       viewBox="0 0 14 13"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
@@ -109,7 +109,7 @@ const ProductPage = () => {
                       <path d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z" />
                     </svg>
                     <svg
-                      className="w-4 h-4 fill-purple-600"
+                      className="w-4 h-4 fill-yellow-600"
                       viewBox="0 0 14 13"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
@@ -117,7 +117,7 @@ const ProductPage = () => {
                       <path d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z" />
                     </svg>
                     <svg
-                      className="w-4 h-4 fill-purple-600"
+                      className="w-4 h-4 fill-yellow-600"
                       viewBox="0 0 14 13"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
@@ -147,10 +147,10 @@ const ProductPage = () => {
                   <p className="text-gray-500 text-base">
                     <strike>${product.price}</strike>
                   </p>
-                  <h4 className="text-purple-800 text-2xl sm:text-3xl font-bold">
+                  <h4 className="text-green-800 text-2xl sm:text-3xl font-bold">
                     ${product.discountprice}
                   </h4>
-                  <div className="flex py-1 px-2 bg-purple-600 font-semibold !ml-4">
+                  <div className="flex py-1 px-2 bg-green-600 font-semibold !ml-4">
                     <span className="text-white text-sm">{product.offer}</span>
                   </div>
                 </div>
@@ -198,13 +198,13 @@ const ProductPage = () => {
                 <div className="mt-4 flex flex-wrap gap-4">
                   <button
                     type="button"
-                    className="px-4 py-3 w-[45%] border border-gray-300 bg-white hover:bg-gray-50 text-gray-800 text-sm font-semibold"
+                    className="px-2 py-2 w-[45%] border border-gray-300 bg-white hover:bg-gray-50 text-gray-800 text-sm font-semibold"
                   >
                     Add to cart
                   </button>
                   <button
                     type="button"
-                    className="px-4 py-3 w-[45%] border border-purple-600 bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold"
+                    className="px-2 py-2 w-[45%] border border-green-600 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold"
                   >
                     Buy it now
                   </button>
@@ -222,11 +222,11 @@ const ProductPage = () => {
                   <input
                     type="number"
                     placeholder="Enter pincode"
-                    className="bg-white px-4 py-2.5 text-sm w-full  border border-gray-300 outline-0"
+                    className="bg-white px-2 py-2 text-sm w-full  border border-gray-300 outline-0"
                   />
                   <button
                     type="button"
-                    className="border border-purple-600 outline-none bg-purple-600 hover:bg-purple-700 text-white  px-4 py-2.5 text-sm"
+                    className="border border-green-600 outline-none bg-green-600 hover:bg-green-700 text-white  px-2 py-2 text-sm"
                   >
                     Apply
                   </button>
@@ -236,7 +236,7 @@ const ProductPage = () => {
                 <div className="text-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="w-8 h-8 fill-purple-600 inline"
+                    className="w-8 h-8 fill-black-600 inline"
                     viewBox="0 0 64 64"
                   >
                     <g data-name="Layer 2">
@@ -257,7 +257,7 @@ const ProductPage = () => {
                 <div className="text-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="w-8 h-8 fill-purple-600 inline"
+                    className="w-8 h-8 fill-black-600 inline"
                     viewBox="0 0 100 100"
                   >
                     <path
@@ -272,7 +272,7 @@ const ProductPage = () => {
                 <div className="text-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="w-8 h-8 fill-purple-600 inline"
+                    className="w-8 h-8 fill-black-600 inline"
                     viewBox="0 0 32 32"
                   >
                     <g data-name="Layer 24">
