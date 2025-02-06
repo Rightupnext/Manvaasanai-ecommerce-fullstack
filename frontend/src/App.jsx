@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Routes,
-  Route,
-  useLocation,
-  useNavigate,
-  Navigate,
-  Outlet,
-} from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate, Navigate, Outlet } from "react-router-dom";
 
 import "./css/style.css";
 import "./charts/ChartjsConfig";
@@ -27,40 +20,19 @@ import ProductsList from "./admin Components/Products/productList";
 import ProductsForm from "./admin Components/Products/ProductForm";
 import ParentChart from "./partials/dashboard/ParentChart";
 import CheckOutForm from "./client Components/layout/CheckOutForm";
+import ProtectedRoute from "./utils/ProtectedRoute";
 
 function App() {
   const location = useLocation();
-  const navigate = useNavigate();
-  const [isAuthenticated, setIsAuthenticated] = useState("client");
+
   useEffect(() => {
     document.querySelector("html").style.scrollBehavior = "auto";
     window.scroll({ top: 0 });
     document.querySelector("html").style.scrollBehavior = "";
   }, [location.pathname]);
 
-  useEffect(() => {
-    const role = localStorage.getItem("role");
-
-    if (role === "admin") {
-      setIsAuthenticated("admin");
-    } else {
-      setIsAuthenticated("client");
-    }
-  }, []);
-
-  useEffect(() => {
-    if (
-      isAuthenticated === false &&
-      location.pathname.startsWith("/dashboard")
-    ) {
-      navigate("/");
-    }
-  }, [isAuthenticated, navigate, location.pathname]);
-
   return (
     <>
-      {" "}
-      {isAuthenticated === "client" ? <Navbar /> : ""}
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<Home />} />
@@ -76,25 +48,30 @@ function App() {
         </Route>
 
         {/* Protected Dashboard Route */}
-        {isAuthenticated === "admin" ? (
-          <Route path="/dashboard" element={<DashboardLayout />}>
-            <Route index element={<ParentChart />} />
-            <Route path="category" element={<CategoryList />} />
-            <Route path="category/add" element={<CategoryForm />} />
-            <Route path="category/filter" element={<CategoryProductPage />} />
-            <Route path="products" element={<ProductsList />} />
-            <Route path="products/add" element={<ProductsForm />} />
-            <Route path="products/edit/:id" element={<ProductsForm />} />
-          </Route>
-        ) : (
-          isAuthenticated === "client" && (
-            <Route path="/dashboard" element={<Navigate to="/" />} />
-          )
-        )}
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <DashboardLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<ParentChart />} />
+          <Route path="category" element={<CategoryList />} />
+          <Route path="category/add" element={<CategoryForm />} />
+          <Route path="category/filter" element={<CategoryProductPage />} />
+          <Route path="products" element={<ProductsList />} />
+          <Route path="products/add" element={<ProductsForm />} />
+          <Route path="products/edit/:id" element={<ProductsForm />} />
+        </Route>
+
+        {/* Redirect dashboard route if unauthorized */}
+        <Route path="/dashboard" element={<Navigate to="/" />} />
       </Routes>
     </>
   );
 }
+
 function DashboardLayout() {
   return (
     <Dashboard>
