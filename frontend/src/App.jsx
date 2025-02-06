@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route, useLocation, useNavigate, Navigate, Outlet } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  useLocation,
+  useNavigate,
+  Navigate,
+  Outlet,
+} from "react-router-dom";
 
 import "./css/style.css";
 import "./charts/ChartjsConfig";
@@ -21,7 +28,7 @@ import ProductsForm from "./admin Components/Products/ProductForm";
 import ParentChart from "./partials/dashboard/ParentChart";
 import CheckOutForm from "./client Components/layout/CheckOutForm";
 import ProtectedRoute from "./utils/ProtectedRoute";
-
+import AddToCartPage from "./client Components/layout/addToCartPage";
 function App() {
   const location = useLocation();
 
@@ -33,12 +40,12 @@ function App() {
 
   return (
     <>
+      <Navbar />
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<Home />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/checkoutform" element={<CheckOutForm />} />
 
         {/* Public Layout */}
         <Route path="/" element={<Layout />}>
@@ -46,12 +53,30 @@ function App() {
           <Route path="products/:title" element={<ProductPage />} />
           <Route path="checkoutform" element={<CheckOutForm />} />
         </Route>
+        
+        {/* Protected Client Routes */}
+        <Route
+          path="/addTocart"
+          element={
+            <ProtectedRoute allowedRoles={['client']}>
+              <AddToCartPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/checkoutform"
+          element={
+            <ProtectedRoute allowedRoles={['client']}>
+              <CheckOutForm />
+            </ProtectedRoute>
+          }
+        />
 
-        {/* Protected Dashboard Route */}
+        {/* Protected Admin Dashboard Route */}
         <Route
           path="/dashboard"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={['admin']}>
               <DashboardLayout />
             </ProtectedRoute>
           }
@@ -71,6 +96,9 @@ function App() {
     </>
   );
 }
+
+
+
 
 function DashboardLayout() {
   return (

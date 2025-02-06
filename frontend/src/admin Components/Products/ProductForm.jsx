@@ -135,6 +135,18 @@ const ProductForm = () => {
       className="w-full border border-gray-300 p-2 rounded-md"
     />
   </div>
+  <div>
+    <label className="block font-semibold mb-1">Product Descriptions</label>
+    <textarea 
+      type="text" 
+      name="description" 
+      placeholder="Product descriptions" 
+      value={formData.description} 
+      onChange={handleChange} 
+      required 
+      className="w-full border border-gray-300 p-2 rounded-md"
+    />
+  </div>
 
 
   <div className="grid grid-cols-2 gap-4">
@@ -252,7 +264,7 @@ const ProductForm = () => {
       <div>
         <label className="block font-semibold mb-1">Value per 100g</label>
         <input 
-          type="number" 
+          type="text" 
           name="valuePer100g" 
           placeholder="Value per 100g" 
           value={nutrient.valuePer100g} 
@@ -265,7 +277,7 @@ const ProductForm = () => {
       <div>
         <label className="block font-semibold mb-1">Value per Serving</label>
         <input 
-          type="number" 
+          type="text" 
           name="valuePerServing" 
           placeholder="Value per Serving" 
           value={nutrient.valuePerServing} 
@@ -278,7 +290,7 @@ const ProductForm = () => {
       <div>
         <label className="block font-semibold mb-1">DV %</label>
         <input 
-          type="number" 
+          type="text" 
           name="dvPercent" 
           placeholder="DV %" 
           value={nutrient.dvPercent} 

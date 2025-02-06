@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 const nutrientSchema = new mongoose.Schema({
   nutrientName: { type: String,  },
-  valuePer100g: { type: Number, },
-  valuePerServing: { type: Number, },
-  dvPercent: { type: Number,  },
+  valuePer100g: { type: String, },
+  valuePerServing: { type: String, },
+  dvPercent: { type: String,  },
 });
 const productSchema = new mongoose.Schema({
   title: { type: String, required: true },

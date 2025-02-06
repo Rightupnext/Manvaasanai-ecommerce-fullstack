@@ -60,7 +60,7 @@ export default function SignIn() {
          className="hidden lg:flex lg:w-1/2 items-center justify-center bg-gray-100 bg-cover bg-center"
          style={{ backgroundImage: `url(${loginImg})` }}
        >
-         <img src={logo} alt="Brahmmis Logo" style={{ width: "30%" }} />
+         {/* <img src={logo} alt="Brahmmis Logo" style={{ width: "30%" }} /> */}
        </div>
        
        

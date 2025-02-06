@@ -168,20 +168,42 @@ exports.getImage = async (req, res) => {
   }
 };
 
-// Add a review to a product
+
 exports.addReview = async (req, res) => {
   try {
-    const { productId, comment, rating } = req.body;
+    const { productId, rating, comment } = req.body;
+    const userId = req.user.id;
+
+
+    if (!productId || !rating || !comment) {
+      return res.status(400).json({ message: 'All fields are required' });
+    }
+
+
     const product = await Product.findById(productId);
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+    const existingReview = product.reviews.find(
+      (review) => review.user.toString() === userId.toString()
+    );
+    if (existingReview) {
+      return res.status(400).json({ message: 'You have already reviewed this product' });
+    }
+    const newReview = {
+      user: userId,
+      comment,
+      rating,
+      date: new Date(),
+    };
+    product.reviews.push(newReview);
+    product.save();
 
-    if (!product) return res.status(404).json({ message: "Product not found" });
 
-    product.reviews.push({ user: req.user.id, comment, rating });
-    await product.save();
-
-    res.json({ message: "Review added", product });
+    return res.status(201).json({ message: 'Review added successfully', product });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
   }
 };
 

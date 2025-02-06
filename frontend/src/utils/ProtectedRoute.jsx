@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 
-const ProtectedRoute = ({ children }) => {
+const ProtectedRoute = ({ children, allowedRoles }) => {
   const [isAuthorized, setIsAuthorized] = useState(null);
   const location = useLocation();
 
   useEffect(() => {
     const userRole = localStorage.getItem("role");
 
-    if (userRole === "admin") {
+    if (allowedRoles.includes(userRole)) {
       setIsAuthorized(true);
     } else {
       setIsAuthorized(false);
     }
-  }, []);
+  }, [allowedRoles]);
 
   if (isAuthorized === null) {
     return <p>Loading...</p>; // Optional loading state
@@ -21,5 +21,6 @@ const ProtectedRoute = ({ children }) => {
 
   return isAuthorized ? children : <Navigate to="/signin" state={{ from: location }} replace />;
 };
+
 
 export default ProtectedRoute;

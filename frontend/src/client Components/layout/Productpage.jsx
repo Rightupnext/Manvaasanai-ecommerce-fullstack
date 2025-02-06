@@ -7,6 +7,7 @@ import "./ProductPage.css";
 import FeedBackForm from "./FeedBackForm";
 import Reviews from "./Reviews";
 import Tabs from "./Tabs";
+import { addToCart } from "../../store/reducers/CartReducers";
 
 const ProductPage = () => {
   const { title } = useParams();
@@ -32,6 +33,11 @@ const ProductPage = () => {
   const getImageURL = (filename) =>
     `http://localhost:5000/api/products/images/${filename}`;
 
+
+  const handleAddToCart = (product) => {
+    dispatch(addToCart([product])); 
+  };
+  
   return (
     <>
       <div className="font-[sans-serif] p-4 bg-white">
@@ -140,7 +146,7 @@ const ProductPage = () => {
                 </div>
                 <div className="mt-2">
                   <p className="text-gray-500 mt-1 text-sm">
-                    {product.description}
+                    <strong>Description : </strong>{product.description}
                   </p>
                 </div>
                 <div className="flex items-center flex-wrap gap-2 mt-4">
@@ -162,41 +168,10 @@ const ProductPage = () => {
               </div>
               <hr className="my-6 border-gray-300" />
               <div>
-                <div className="flex gap-2 items-center border border-gray-300 bg-white px-3 py-2.5 w-max">
-                  <button type="button" className="border-none outline-none">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-2.5 h-2.5"
-                      viewBox="0 0 121.805 121.804"
-                    >
-                      <path
-                        d="M7.308 68.211h107.188a7.309 7.309 0 0 0 7.309-7.31 7.308 7.308 0 0 0-7.309-7.309H7.308a7.31 7.31 0 0 0 0 14.619z"
-                        data-original="#000000"
-                      />
-                    </svg>
-                  </button>
-                  <span className="text-gray-800 text-sm font-semibold px-3">
-                    1
-                  </span>
-                  <button type="button" className="border-none outline-none">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-2.5 h-2.5"
-                      viewBox="0 0 512 512"
-                    >
-                      <path
-                        d="M256 509.892c-19.058 0-34.5-15.442-34.5-34.5V36.608c0-19.058 15.442-34.5 34.5-34.5s34.5 15.442 34.5 34.5v438.784c0 19.058-15.442 34.5-34.5 34.5z"
-                        data-original="#000000"
-                      />
-                      <path
-                        d="M475.392 290.5H36.608c-19.058 0-34.5-15.442-34.5-34.5s15.442-34.5 34.5-34.5h438.784c19.058 0 34.5 15.442 34.5 34.5s-15.442 34.5-34.5 34.5z"
-                        data-original="#000000"
-                      />
-                    </svg>
-                  </button>
-                </div>
+               
                 <div className="mt-4 flex flex-wrap gap-4">
                   <button
+                  onClick={() => handleAddToCart(product)}
                     type="button"
                     className="px-2 py-2 w-[45%] border border-gray-300 bg-white hover:bg-gray-50 text-gray-800 text-sm font-semibold"
                   >
@@ -211,27 +186,7 @@ const ProductPage = () => {
                 </div>
               </div>
               <hr className="my-6 border-gray-300" />
-              <div>
-                <h3 className="text-lg sm:text-xl font-bold text-gray-800">
-                  Select Delivery Location
-                </h3>
-                <p className="text-gray-500 text-sm mt-1">
-                  Enter the pincode of your area to check product availability.
-                </p>
-                <div className="flex items-center gap-2 mt-4 max-w-sm">
-                  <input
-                    type="number"
-                    placeholder="Enter pincode"
-                    className="bg-white px-2 py-2 text-sm w-full  border border-gray-300 outline-0"
-                  />
-                  <button
-                    type="button"
-                    className="border border-green-600 outline-none bg-green-600 hover:bg-green-700 text-white  px-2 py-2 text-sm"
-                  >
-                    Apply
-                  </button>
-                </div>
-              </div>
+            
               <div className="flex justify-between gap-4 mt-6">
                 <div className="text-center">
                   <svg

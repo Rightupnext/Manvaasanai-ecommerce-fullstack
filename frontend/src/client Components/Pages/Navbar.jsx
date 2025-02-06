@@ -2,8 +2,11 @@ import React, { useState, useEffect } from "react";
 import logo from "../../images/assets/brahmmis logo recreate.png";
 import { FaCartArrowDown } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectCartTotalCount } from "../../store/reducers/CartReducers";
 
 function Navbar() {
+  const cartTotalCount = useSelector(selectCartTotalCount);
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -72,8 +75,13 @@ function Navbar() {
     { label: "Our Menu", link: "/our-menu" },
     { label: "Contact Us", link: "/contact" },
     {
-      label: <FaCartArrowDown style={{ width: "32", height: "22" }} />,
-      link: "/cart",
+      label: (
+        <div className="flex items-center space-x-2">
+          <FaCartArrowDown style={{ width: "32px", height: "22px" }} />
+          <span>{cartTotalCount}</span>
+        </div>
+      ),
+      link: "/addTocart",
     },
   ].map((item, index) => (
     <li
