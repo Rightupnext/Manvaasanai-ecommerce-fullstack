@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FaRegEyeSlash } from "react-icons/fa";
+import { FaLock, FaLockOpen } from "react-icons/fa"; 
 import logo from "../../images/assets/brahmmis logo recreate.png"
+import loginImg from "../../images/assets/login-img.jpg"
 import { registerUser } from "../../store/reducers/userReducers";
 import { Link } from "react-router-dom";
 
@@ -44,14 +45,16 @@ export default function SignUp() {
   return (
     <div className="py-16">
       <div className="flex bg-white rounded-lg shadow-lg overflow-hidden mx-auto max-w-sm lg:max-w-4xl">
-      <div className="hidden lg:flex lg:w-1/2 items-center justify-center bg-gray-100">
-  <img src={logo} alt="Brahmmis Logo" className="w-44" />
+      <div
+  className="hidden lg:flex lg:w-1/2 items-center justify-center bg-gray-100 bg-cover bg-center"
+  style={{ backgroundImage: `url(${loginImg})` }}
+>
+  <img src={logo} alt="Brahmmis Logo" style={{ width: "30%" }} />
 </div>
 
+
         <div className="w-full p-8 lg:w-1/2">
-        <div className="hidden lg:flex lg:w-1/2 align-items-center items-center justify-center bg-gray-100">
-          <img src={logo} alt="Brahmmis Logo" style={{ width: "30%" }} />
-        </div>
+       
 
 
 
@@ -90,20 +93,22 @@ export default function SignUp() {
                 </Link>
               </div>
 
-                <div className="relative">
-                  <input
-                    className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-3 pr-10 block w-full appearance-none"
-                    value={password}
-                    type={passwordVisible ? "text" : "password"}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
-                  <FaRegEyeSlash
-                    className="absolute right-3 top-3 cursor-pointer text-gray-500"
-                    style={{ width: "20px", height: "20px" }}
-                    onClick={() => setPasswordVisible(!passwordVisible)}
-                  />
-                </div>
+              <div className="relative">
+                <input
+                  className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-3 pr-10 block w-full appearance-none"
+                  value={password}
+                  type={passwordVisible ? "text" : "password"}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <span
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500 flex items-center"
+                  style={{ fontSize: "15px" }} // Adjust icon size if needed
+                  onClick={() => setPasswordVisible(!passwordVisible)}
+                >
+                  {passwordVisible ? <FaLockOpen /> : <FaLock />}
+                </span>
+              </div>
             </div>
 
             <div className="mt-4">
@@ -118,17 +123,19 @@ export default function SignUp() {
 
               <div className="relative">
                 <input
-                  className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-3 pr-10 block w-full appearance-none"
+                  className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-3 pr-10 block w-full appearance-none"
                   value={cpassword}
                   type={cpasswordVisible ? "text" : "password"}
                   onChange={(e) => setCPassword(e.target.value)}
                   required
                 />
-                <FaRegEyeSlash
-                  className="absolute right-3 top-3 cursor-pointer text-gray-500"
-                  style={{ width: "20px", height: "20px" }}
+                <span
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500 flex items-center"
+                  style={{ fontSize: "15px" }} // Adjust icon size if needed
                   onClick={() => setCPasswordVisible(!cpasswordVisible)}
-                />
+                >
+                  {cpasswordVisible ? <FaLockOpen /> : <FaLock />}
+                </span>
               </div>
             </div>
 
@@ -164,7 +171,7 @@ export default function SignUp() {
           <div className="mt-4 flex items-center justify-between">
             <span className="border-b w-1/5 md:w-1/4" />
             <Link to="/signup" className="text-xs text-gray-500 uppercase">
-              or sign up
+              or Sign in
             </Link>
             <span className="border-b w-1/5 md:w-1/4" />
           </div>

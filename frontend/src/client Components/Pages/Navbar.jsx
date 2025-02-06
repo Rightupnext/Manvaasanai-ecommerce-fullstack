@@ -65,46 +65,45 @@ function Navbar() {
             isOpen ? "mt-1 max-h-56" : "max-h-0"
           } peer-checked:max-h-56 flex max-h-0 w-full flex-col items-center justify-between overflow-hidden transition-all lg:-ml-28 md:max-h-full md:flex-row md:items-center md:justify-between`}
         >
-          <ul className="flex flex-col items-center space-y-2 md:ml-auto md:flex-row md:space-y-0 md:space-x-6 w-full ">
-            {[
-              { label: "Home", link: "/" },
-              { label: "About Us", link: "/about-us" },
-              { label: "Our Menu", link: "/our-menu" },
-              { label: "Contact Us", link: "/contact" },
-              {
-                label: (
-                  <FaCartArrowDown style={{ width: "32", height: "22" }} />
-                ),
-                link: "/cart",
-              },
-            ].map((item, index) => (
-              <li
-                key={index}
-                className="text-black md:text-base hover:text-green-600"
-                data-aos="fade-down"
-                data-aos-duration={`${400 + index * 200}`}
-              >
-                <Link
-                  to={item.link}
-                  className="no-underline transition-all duration-300"
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-            <li
-              className="text-[#000000] md:text-base p-2 hover:text-green-600 hover:font-bold"
-              data-aos="fade-down"
-              data-aos-duration="1400"
-            >
-              <Link
-                to="/signin"
-                className="bg-gray-600 text-white py-2 px-4 rounded-lg no-underline"
-              >
-                Login
-              </Link>
-            </li>
-          </ul>
+          <ul className="flex flex-col items-center space-y-2 md:flex-row md:space-y-0 md:space-x-6 w-full md:justify-end">
+  {[
+    { label: "Home", link: "/" },
+    { label: "About Us", link: "/about-us" },
+    { label: "Our Menu", link: "/our-menu" },
+    { label: "Contact Us", link: "/contact" },
+    {
+      label: <FaCartArrowDown style={{ width: "32", height: "22" }} />,
+      link: "/cart",
+    },
+  ].map((item, index) => (
+    <li
+      key={index}
+      className="text-black md:text-base hover:text-green-600"
+      data-aos="fade-down"
+      data-aos-duration={`${400 + index * 200}`}
+    >
+      <Link
+        to={item.link}
+        className="no-underline transition-all duration-300"
+      >
+        {item.label}
+      </Link>
+    </li>
+  ))}
+  <li
+    className="text-[#000000] md:text-base p-2 hover:text-green-600 hover:font-bold"
+    data-aos="fade-down"
+    data-aos-duration="1400"
+  >
+    <Link
+      to="/signin"
+      className="bg-gray-600 text-white py-2 px-4 rounded-lg no-underline"
+    >
+      Login
+    </Link>
+  </li>
+</ul>
+
         </nav>
       </div>
     </header>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../store/reducers/userReducers";
+import loginImg from "../../images/assets/login-img.jpg"
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 export default function SignIn() {
@@ -55,13 +56,15 @@ export default function SignIn() {
   return (
     <div className="py-16">
       <div className="flex bg-white rounded-lg shadow-lg overflow-hidden mx-auto max-w-sm lg:max-w-4xl">
-        <div
-          className="hidden lg:block lg:w-1/2 bg-cover"
-          style={{
-            backgroundImage:
-              'url("https://images.unsplash.com/photo-1546514714-df0ccc50d7bf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=667&q=80")',
-          }}
-        ></div>
+       <div
+         className="hidden lg:flex lg:w-1/2 items-center justify-center bg-gray-100 bg-cover bg-center"
+         style={{ backgroundImage: `url(${loginImg})` }}
+       >
+         <img src={logo} alt="Brahmmis Logo" style={{ width: "30%" }} />
+       </div>
+       
+       
+       
         <div className="w-full p-8 lg:w-1/2">
           <h2 className="text-2xl font-semibold text-gray-700 text-center">
             Brand
