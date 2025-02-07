@@ -168,44 +168,61 @@ exports.getImage = async (req, res) => {
   }
 };
 
-
+// Add a review to a product
 exports.addReview = async (req, res) => {
   try {
-    const { productId, rating, comment } = req.body;
-    const userId = req.user.id;
+    const { productId, rating, comment } = req.body; // These should be in the request body as an object
+    const userId = req.user.id; // Assuming `userId` is retrieved from the authentication middleware
 
+    // Debugging log
+    console.log("Review details:", { productId, rating, comment, userId });
 
+    // Validate the data
     if (!productId || !rating || !comment) {
       return res.status(400).json({ message: 'All fields are required' });
     }
 
+    // Validate rating (assuming it should be between 1 and 5)
+    if (rating < 1 || rating > 5) {
+      return res.status(400).json({ message: 'Rating must be between 1 and 5' });
+    }
 
+    // Find the product to add the review to
     const product = await Product.findById(productId);
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
+
+    // Check if the user has already reviewed this product
     const existingReview = product.reviews.find(
       (review) => review.user.toString() === userId.toString()
     );
     if (existingReview) {
       return res.status(400).json({ message: 'You have already reviewed this product' });
     }
+
+    // Create the review object
     const newReview = {
       user: userId,
       comment,
       rating,
       date: new Date(),
     };
+
+    // Add the review to the product's reviews array
     product.reviews.push(newReview);
-    product.save();
+    await product.save();  // Ensure saving is awaited
 
+    // Send success response with the new review and the updated product
+    return res.status(201).json({ message: 'Review added successfully', review: newReview, product });
 
-    return res.status(201).json({ message: 'Review added successfully', product });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Server error' });
+    console.error("Error adding review:", error);
+    return res.status(500).json({ message: 'Server error' });
   }
 };
+
+
 
 exports.getProduct = async (req, res) => {
   try {

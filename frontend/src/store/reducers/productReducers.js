@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../axios";
-
+import {openModal} from './modalSlice'
 export const addProduct = createAsyncThunk(
   "products/addProduct",
   async (formData, thunkAPI) => {
@@ -91,6 +91,37 @@ export const getProductsByCategory = createAsyncThunk(
     }
   }
 );
+export const addProductReviews = createAsyncThunk(
+  "products/addProductReviews",
+  async ({ productId, comment, rating }, thunkAPI) => {
+    try {
+      const response = await axiosInstance.post(`/api/products/reviews`, {
+        productId,
+        comment,
+        rating,
+      });
+
+      // Dispatch success modal
+      thunkAPI.dispatch(
+        openModal({ type: "success", message: response.data?.message || "Review added successfully!" })
+      );
+
+      return response.data?.message; // Ensure message is returned properly
+    } catch (error) {
+      // Check for specific error from backend (400 Bad Request)
+      const errorMessage = error.response?.data?.message
+
+      // Dispatch error modal for 'Already Reviewed'
+      thunkAPI.dispatch(
+        openModal({ type: "error", message: errorMessage })
+      );
+
+      return thunkAPI.rejectWithValue(errorMessage);  // Send the error to the reducer
+    }
+  }
+);
+
+
 
 // Initial state
 const initialState = {
@@ -191,7 +222,22 @@ const productSlice = createSlice({
       .addCase(getProductsByCategory.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      });
+      })
+        // Add product reviews
+        .addCase(addProductReviews.pending, (state) => {
+          state.loading = true;
+        })
+        .addCase(addProductReviews.fulfilled, (state, action) => {
+          state.loading = false;
+          // Update the product's reviews in the state if necessary
+          if (state.product) {
+            state.product.reviews.push(action.payload.review);
+          }
+        })
+        .addCase(addProductReviews.rejected, (state, action) => {
+          state.loading = false;
+          state.error = action.payload;
+        });
   },
 });
 export default productSlice.reducer;

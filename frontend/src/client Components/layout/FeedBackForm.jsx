@@ -1,14 +1,15 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addProductReviews } from "../../store/reducers/productReducers";
+import { useParams } from "react-router-dom";
 
-export default function FeedBackForm() {
+export default function FeedBackForm({setReviewShow}) {
+  const dispatch = useDispatch();
+  const { title } = useParams();
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
     testimonial: "",
     rating: 4,
-    date: new Date().toISOString().split("T")[0],
     satisfaction: 5,
-    recommend: true,
     consent: false,
   });
 
@@ -27,9 +28,18 @@ export default function FeedBackForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submitted Data:", formData);
-    alert("Form submitted successfully!");
+  
+    dispatch(
+      addProductReviews({
+        productId: title,
+        comment: formData.testimonial,
+        rating: formData.rating,
+      })
+    );
+    setReviewShow(''); 
+    setFormData({ testimonial: '', rating: 0 });
   };
+  
 
   return (
     <form
@@ -39,37 +49,6 @@ export default function FeedBackForm() {
       <h2 className="text-2xl font-bold mb-4 text-center">
         Write your Reviews
       </h2>
-
-      <div className="mb-4">
-        <label htmlFor="name" className="block mb-1">
-          Name
-        </label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          className="w-full py-2 px-4 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          required
-        />
-      </div>
-
-      <div className="mb-4">
-        <label htmlFor="email" className="block mb-1">
-          Email
-        </label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          className="w-full py-2 px-4 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          required
-        />
-      </div>
-
       <div className="mb-4">
         <label htmlFor="testimonial" className="block mb-1">
           Message

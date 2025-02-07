@@ -254,7 +254,6 @@ const ProductPage = () => {
           </div>
         </div>
 
-        {/* Feedback Form */}
         <div className="mt-6">
           <Tabs product={product}/>
         </div>

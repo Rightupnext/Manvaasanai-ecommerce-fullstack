@@ -29,6 +29,8 @@ import ParentChart from "./partials/dashboard/ParentChart";
 import CheckOutForm from "./client Components/layout/CheckOutForm";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import AddToCartPage from "./client Components/layout/addToCartPage";
+import NotificationModal from "./client Components/layout/NotificationModal";
+
 function App() {
   const location = useLocation();
 
@@ -40,6 +42,7 @@ function App() {
 
   return (
     <>
+     <NotificationModal />
       <Navbar />
       <Routes>
         {/* Public Routes */}
