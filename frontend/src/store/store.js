@@ -4,12 +4,14 @@ import userReducer from './reducers/userReducers';
 import CategoryReducers from './reducers/CategorySlice';
 import ProductReducers from './reducers/productReducers';
 import  addToCart from './reducers/CartReducers';
+import modalReducers from './reducers/modalSlice'
 const store = configureStore({
   reducer: {
     auth: userReducer,
     category:CategoryReducers,
     products:ProductReducers,
-    cart:addToCart
+    cart:addToCart,
+    modal: modalReducers,
   },
 });
 
