@@ -198,7 +198,7 @@ exports.addReview = async (req, res) => {
       (review) => review.user.toString() === userId.toString()
     );
     if (existingReview) {
-      return res.status(400).json({ message: 'You have already reviewed this product' });
+      return res.status(409).json({ message: 'You have already reviewed this product' });
     }
 
     // Create the review object
@@ -222,6 +222,56 @@ exports.addReview = async (req, res) => {
   }
 };
 
+exports.getReviews = async (req, res) => {
+  try {
+    const { productId } = req.params; // Retrieve productId from URL parameters
+
+    // Find the product by its ID
+    const product = await Product.findById(productId).populate('reviews.user', 'name email'); // Populate user data if needed
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    // Extract reviews from the product
+    const reviews = product.reviews;
+
+    // Calculate the average rating (rounded to 2 decimal places)
+    const totalReviews = reviews.length;
+    const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
+    const averageRating = (totalRating / totalReviews).toFixed(2);
+
+    // Calculate the rating breakdown (5, 4, 3, 2, 1-star)
+    const ratingBreakdown = {
+      5: reviews.filter((review) => review.rating === 5).length,
+      4: reviews.filter((review) => review.rating === 4).length,
+      3: reviews.filter((review) => review.rating === 3).length,
+      2: reviews.filter((review) => review.rating === 2).length,
+      1: reviews.filter((review) => review.rating === 1).length,
+    };
+
+    // Calculate total reviews count (just sum of all ratings)
+    const totalReviewsCount = {
+      5: ratingBreakdown[5],
+      4: ratingBreakdown[4],
+      3: ratingBreakdown[3],
+      2: ratingBreakdown[2],
+      1: ratingBreakdown[1],
+      totalReviews: totalReviews, // Total reviews
+      averageRating: averageRating, // Average rating
+    };
+
+    // Return the reviews along with the calculated data
+    return res.status(200).json({
+      reviews: reviews,
+      ratingBreakdown: ratingBreakdown,
+      totalReviewsCount: totalReviewsCount,
+    });
+    
+  } catch (error) {
+    console.error("Error fetching reviews:", error);
+    return res.status(500).json({ message: 'Server error' });
+  }
+};
 
 
 exports.getProduct = async (req, res) => {

@@ -121,7 +121,21 @@ export const addProductReviews = createAsyncThunk(
   }
 );
 
-
+export const getProductsByIdReviews = createAsyncThunk(
+  "products/getProductsByIdReviews",
+  async (productId, thunkAPI) => {
+    try {
+      const response = await axiosInstance.get(
+        `/api/products/reviews/${productId}`
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data || "Something went wrong"
+      );
+    }
+  }
+);
 
 // Initial state
 const initialState = {
@@ -237,7 +251,20 @@ const productSlice = createSlice({
         .addCase(addProductReviews.rejected, (state, action) => {
           state.loading = false;
           state.error = action.payload;
-        });
+        })
+
+         // Get products by category
+      .addCase(getProductsByIdReviews.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getProductsByIdReviews.fulfilled, (state, action) => {
+        state.loading = false;
+        state.products = action.payload; // Set products from the API response
+      })
+      .addCase(getProductsByIdReviews.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
   },
 });
 export default productSlice.reducer;

@@ -1,6 +1,6 @@
 const express = require('express');
 const multer = require('multer');
-const { addProduct, addReview,getProducts,getImage,getProduct,updateProduct,deleteProduct,getProductsByCategory,getProductByTitle } = require('../controllers/productController');
+const { addProduct, addReview,getProducts,getImage,getProduct,updateProduct,deleteProduct,getProductsByCategory,getProductByTitle,getReviews } = require('../controllers/productController');
 const { isAuthenticated, allowRoles } = require("../middleware/AuthMiddleware");
 
 const router = express.Router();
@@ -19,5 +19,5 @@ router.get('/category/:categoryId',getProductsByCategory);
 router.get('/:title',getProductByTitle);
 router.get('/images/:filename', getImage);
 router.post('/reviews',isAuthenticated,allowRoles('admin','client'), addReview); 
-
+router.get('/reviews/:productId', getReviews);
 module.exports = router;
