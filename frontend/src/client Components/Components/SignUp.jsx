@@ -46,11 +46,11 @@ export default function SignUp() {
     <div className="py-16">
       <div className="flex bg-white rounded-lg shadow-lg overflow-hidden mx-auto max-w-sm lg:max-w-4xl">
       <div
-  className="hidden lg:flex lg:w-1/2 items-center justify-center bg-gray-100 bg-cover bg-center"
-  style={{ backgroundImage: `url(${loginImg})` }}
->
-  <img src={logo} alt="Brahmmis Logo" style={{ width: "30%" }} />
-</div>
+        className="hidden lg:flex lg:w-1/2 items-center justify-center bg-gray-100 bg-cover bg-center"
+        style={{ backgroundImage: `url(${loginImg})` }}
+      >
+        <img src={logo} alt="Brahmmis Logo" style={{ width: "30%" }} />
+      </div>
 
 
         <div className="w-full p-8 lg:w-1/2">
