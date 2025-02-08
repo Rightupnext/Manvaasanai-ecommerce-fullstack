@@ -30,6 +30,7 @@ import CheckOutForm from "./client Components/layout/CheckOutForm";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import AddToCartPage from "./client Components/layout/addToCartPage";
 import NotificationModal from "./client Components/layout/NotificationModal";
+import ShippingAndTaxForm from "./admin Components/TaxandShipping/ShippingAndTaxForm";
 
 function App() {
   const location = useLocation();
@@ -91,6 +92,7 @@ function App() {
           <Route path="products" element={<ProductsList />} />
           <Route path="products/add" element={<ProductsForm />} />
           <Route path="products/edit/:id" element={<ProductsForm />} />
+          <Route path="tax-create" element={<ShippingAndTaxForm />} />
         </Route>
 
         {/* Redirect dashboard route if unauthorized */}

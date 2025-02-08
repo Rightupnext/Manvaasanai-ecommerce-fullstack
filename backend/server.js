@@ -8,7 +8,9 @@ const bodyParser = require('body-parser');
 const authRoutes = require('./src/routes/authRoutes');
 const categoryRoutes = require('./src/routes/categoryRoutes');
 const productRoutes = require('./src/routes/productRoutes');
-
+const orderRoutes=require('./src/routes/orderRoutes');
+const ShippingAndTax=require('./src/routes/ShippingAndTaxRoutes')
+const razorpayRoutes = require("./src/routes/razorpayRoutes");
 // Initialize App
 const app = express();
 app.use(express.json());
@@ -31,7 +33,9 @@ mongoose
 app.use('/api/auth', authRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/products', productRoutes);
-
+app.use('/api/order', orderRoutes);
+app.use('/api/shipping-tax', ShippingAndTax);
+app.use("/api/razorpay", razorpayRoutes);
 // Root Endpoint
 app.get('/', (req, res) => {
   res.send('Welcome to the backend API!');
