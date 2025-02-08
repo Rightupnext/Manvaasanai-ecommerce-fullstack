@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import ReactImageMagnify from "react-image-magnify";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getProduct } from "../../store/reducers/productReducers";
 import "./ProductPage.css";
-import FeedBackForm from "./FeedBackForm";
+import FeedBackForm from "./FeedBackFormModal";
 import Reviews from "./Reviews";
 import Tabs from "./Tabs";
 import { addToCart } from "../../store/reducers/CartReducers";
 
 const ProductPage = () => {
+  const navigate = useNavigate();
   const { title } = useParams();
   const dispatch = useDispatch();
   const { product, loading, error } = useSelector((state) => state.products);
@@ -34,9 +35,12 @@ const ProductPage = () => {
     `http://localhost:5000/api/products/images/${filename}`;
 
 
+
   const handleAddToCart = (product) => {
-    dispatch(addToCart([product])); 
+    dispatch(addToCart([product]));
+    navigate('/addTocart'); // Navigate immediately after dispatch
   };
+  
   
   return (
     <>
