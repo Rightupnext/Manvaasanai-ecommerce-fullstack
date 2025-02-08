@@ -10,12 +10,15 @@ const orderSchema = new mongoose.Schema({
   ],
   shippingAddress: {
     fullName: { type: String, required: true },
-    address: { type: String, required: true },
+    street: { type: String, required: true }, // Street address
     city: { type: String, required: true },
+    state: { type: String, required: true }, // State
     postalCode: { type: String, required: true },
-    country: { type: String, required: true },
+    phoneNumber: { type: String, required: true }, // Phone number
   },
   totalPrice: { type: Number, required: true },
+  subTotal: { type: Number, required: true },
+  tax: { type: Number, required: true },
   status: {
     type: String,
     enum: ['Pending', 'Packed', 'Shipped', 'Delivered'],

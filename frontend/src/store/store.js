@@ -6,6 +6,8 @@ import ProductReducers from './reducers/productReducers';
 import  addToCart from './reducers/CartReducers';
 import modalReducers from './reducers/modalSlice';
 import ReviewSlice from './reducers/ReviewsSlice';
+import  ShippingAndTaxReducers  from './reducers/shippingAndTaxSlice';
+import razorpayReducer from "./reducers/razorpaySlice";
 const store = configureStore({
   reducer: {
     auth: userReducer,
@@ -13,7 +15,9 @@ const store = configureStore({
     products:ProductReducers,
     cart:addToCart,
     modal: modalReducers,
-    reviews:ReviewSlice
+    reviews:ReviewSlice,
+    shippingAndTax:ShippingAndTaxReducers,
+    razorpay: razorpayReducer,
 
   },
 });

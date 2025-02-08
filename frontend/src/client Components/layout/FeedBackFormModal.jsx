@@ -40,6 +40,7 @@ export default function FeedBackForm({ setReviewShow, handlecloseModal }) {
         handlecloseModal();
       
     } catch (error) {
+      handlecloseModal();
       console.error("Error submitting feedback:", error);
     }
   };
