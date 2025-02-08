@@ -27,9 +27,21 @@ const ProductPage = () => {
     }
   }, [product]);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
-  if (!product) return <p>Product not found.</p>;
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div
+          className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-gray-500 border-e-transparent"
+          role="status"
+        >
+          <span className="hidden">Loading...</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) return <p className="text-red-500 text-center">Error: {error}</p>;
+  if (!product) return <p className="text-center">Product not found.</p>;
 
   const getImageURL = (filename) =>
     `http://localhost:5000/api/products/images/${filename}`;

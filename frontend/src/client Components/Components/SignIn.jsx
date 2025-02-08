@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../store/reducers/userReducers";
 import loginImg from "../../images/assets/login-img.jpg"
+import { FaLock, FaLockOpen } from "react-icons/fa"; 
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 export default function SignIn() {
@@ -12,6 +13,8 @@ export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [termsAccepted, setTermsAccepted] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -85,22 +88,33 @@ export default function SignIn() {
               />
             </div>
             <div className="mt-4">
-              <div className="flex justify-between">
-                <label className="block text-gray-700 text-sm font-bold mb-2">
-                  Password
-                </label>
-                <Link to="/forgot-password" className="text-xs text-gray-500">
-                  Forget Password?
-                </Link>
-              </div>
-              <input
-                className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-3 block w-full appearance-none"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
+                <div className="flex justify-between">
+                  <label className="block text-gray-700 text-sm font-bold mb-2">
+                    Password
+                  </label>
+                  <Link to="/forgot-password" className="text-xs text-gray-500">
+                    Forget Password?
+                  </Link>
+                </div>
+
+                <div className="relative">
+                  <input
+                    className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-1 px-3 pr-10 block w-full appearance-none"
+                    type={passwordVisible ? "text" : "password"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                  <span
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500 flex items-center"
+                    style={{ fontSize: "15px" }}
+                    onClick={() => setPasswordVisible(!passwordVisible)}
+                  >
+                    {passwordVisible ? <FaLockOpen /> : <FaLock />}
+                  </span>
+                </div>
+          </div>
+
             <div className="form-check d-flex justify-content-center mb-5">
               <input
                 className="form-check-input me-2"
