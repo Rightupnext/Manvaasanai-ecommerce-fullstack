@@ -7,34 +7,50 @@ export const registerUser = createAsyncThunk(
   'auth/registerUser',
   async (userData, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post('api/auth/register', userData)
-      return response.data // Return the response data to be used in the reducer
+      const response = await axiosInstance.post('api/auth/register', userData);
+      return response.data;
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error.message)
+      return rejectWithValue(error.response ? error.response.data : error.message);
     }
-  },
-)
+  }
+);
 
 // Async thunk for user login
 export const loginUser = createAsyncThunk(
   'auth/loginUser',
   async (loginData, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post('api/auth/login', loginData)
-      localStorage.setItem('token', response.data.token)
-      localStorage.setItem('role', response.data.role)
-      return response.data // Return the response data (user data, token, etc.)
+      const response = await axiosInstance.post('api/auth/login', loginData);
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('role', response.data.role);
+      return response.data;
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error.message)
+      return rejectWithValue(error.response ? error.response.data : error.message);
     }
-  },
-)
+  }
+);
 
-// Initial state with separate login and register states
+// Async thunk for fetching user orders
+export const myOrders = createAsyncThunk(
+  'auth/myOrders',
+  async (_, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axiosInstance.get('api/auth/my-orders', {
+        headers: { Authorization: `Bearer ${token}` }, 
+      });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response ? error.response.data : error.message);
+    }
+  }
+);
+// Initial state
 const initialState = {
   loginUser: { data: null, status: null, error: false },
   register: { data: null, status: null, error: false },
-  user: null, 
+  myOrders: { data: null, status: null, error: false },
+  user: null,
   loading: false,
   error: null,
 };
@@ -48,6 +64,8 @@ const authSlice = createSlice({
       state.error = null;
       state.loginUser = { data: null, status: null, error: false };
       state.register = { data: null, status: null, error: false };
+      localStorage.removeItem('token'); // Clear token on logout
+      localStorage.removeItem('role');
     },
   },
   extraReducers: (builder) => {
@@ -88,10 +106,27 @@ const authSlice = createSlice({
         state.loginUser.error = true;
         state.loginUser.data = action.payload || 'Login failed';
         state.loading = false;
+      })
+
+      // Handle My Orders
+      .addCase(myOrders.pending, (state) => {
+        state.myOrders.status = 'pending';
+        state.myOrders.error = false;
+        state.loading = true;
+      })
+      .addCase(myOrders.fulfilled, (state, action) => {
+        state.myOrders.status = 'success';
+        state.myOrders.data = action.payload;
+        state.loading = false;
+      })
+      .addCase(myOrders.rejected, (state, action) => {
+        state.myOrders.status = 'failed';
+        state.myOrders.error = true;
+        state.myOrders.data = action.payload;
+        state.loading = false;
       });
   },
 });
 
 export const { logoutUser } = authSlice.actions;
-
 export default authSlice.reducer;

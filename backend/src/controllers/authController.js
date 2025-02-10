@@ -2,7 +2,8 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
-
+const Orders = require('../models/orders');
+const Product = require('../models/Product'); 
 const SECRET_KEY = "your_secret_key";
 
 // Register
@@ -89,5 +90,30 @@ exports.promoteRole = async (req, res) => {
     res.json({ message: `User role updated to ${newRole}` });
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+};
+exports.getUserOrders = async (req, res) => {
+  try {
+    const userId = req.user.id; // Get the logged-in user's ID from the request
+
+    console.log("User ID:", userId);
+
+    // Query orders and populate product details
+    const orders = await Orders.find({ user: userId })
+      .populate({
+        path: 'products.product', // Populating the product field inside each order's products
+        select: 'title description price discountprice offer packSize available image category nutrients', // Select the necessary fields you want to include in the response
+        populate: {
+          path: 'category', // Optionally populate the category details if needed
+          select: 'name' // Example: Select category name
+        }
+      })
+      .exec();
+
+    // Send the orders with populated product details in the response
+    res.status(200).json({ success: true, orders });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Server error", error });
   }
 };

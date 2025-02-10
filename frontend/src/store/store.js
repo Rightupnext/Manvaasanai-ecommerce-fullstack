@@ -8,6 +8,7 @@ import modalReducers from './reducers/modalSlice';
 import ReviewSlice from './reducers/ReviewsSlice';
 import  ShippingAndTaxReducers  from './reducers/shippingAndTaxSlice';
 import razorpayReducer from "./reducers/razorpaySlice";
+import orderReducers from './reducers/orderslice'
 const store = configureStore({
   reducer: {
     auth: userReducer,
@@ -18,6 +19,7 @@ const store = configureStore({
     reviews:ReviewSlice,
     shippingAndTax:ShippingAndTaxReducers,
     razorpay: razorpayReducer,
+    orders:orderReducers
 
   },
 });

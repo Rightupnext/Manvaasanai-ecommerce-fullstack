@@ -31,6 +31,7 @@ import ProtectedRoute from "./utils/ProtectedRoute";
 import AddToCartPage from "./client Components/layout/addToCartPage";
 import NotificationModal from "./client Components/layout/NotificationModal";
 import ShippingAndTaxForm from "./admin Components/TaxandShipping/ShippingAndTaxForm";
+import NewOrdersHistory from "./admin Components/Orders/NewOrdersHistory";
 
 function App() {
   const location = useLocation();
@@ -40,11 +41,16 @@ function App() {
     window.scroll({ top: 0 });
     document.querySelector("html").style.scrollBehavior = "";
   }, [location.pathname]);
-
+ 
+  const userRole = localStorage.getItem("role");
+  const path = window.location.pathname; // Assuming you're getting the current path like this
+  
+  
   return (
     <>
      <NotificationModal />
-      <Navbar />
+     {!(userRole === "admin" && location.pathname.startsWith("/dashboard")) && <Navbar />}
+
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<Home />} />
@@ -93,6 +99,7 @@ function App() {
           <Route path="products/add" element={<ProductsForm />} />
           <Route path="products/edit/:id" element={<ProductsForm />} />
           <Route path="tax-create" element={<ShippingAndTaxForm />} />
+          <Route path="new-order" element={<NewOrdersHistory />} />
         </Route>
 
         {/* Redirect dashboard route if unauthorized */}
