@@ -52,3 +52,51 @@ exports.placeOrder = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+exports.getAllOrders = async (req, res) => {
+  try {
+    // Fetch all orders from the database, populating the product details
+    const orders = await Order.find().populate('products.product');
+
+    if (orders.length === 0) {
+      return res.status(404).json({ message: 'No orders found' });
+    }
+
+    res.status(200).json(orders); // Return all orders
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+exports.updateOrderStatus = async (req, res) => {
+  try {
+    const orderId = req.params.id; // Get order id from the request params
+    const { status } = req.body; // The new status from the request body
+
+    // Validate if the status is a valid status
+    const validStatuses = ['Pending', 'Packed', 'Shipped', 'Delivered'];
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json({ message: 'Invalid status' });
+    }
+
+    // Get the order
+    const order = await Order.findById(orderId);
+    if (!order) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+
+    // Check if the order's status can be updated to the requested status
+    const statusOrder = validStatuses.indexOf(order.status);
+    const statusNew = validStatuses.indexOf(status);
+
+    if (statusNew <= statusOrder) {
+      return res.status(400).json({ message: `Cannot move to ${status} from ${order.status}` });
+    }
+
+    // Update the status
+    order.status = status;
+    await order.save();
+
+    res.status(200).json({ message: `Order status updated to ${status}`, order });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};

@@ -49,14 +49,11 @@ const ProductPage = () => {
   const getImageURL = (filename) =>
     `http://localhost:5000/api/products/images/${filename}`;
 
-
-
   const handleAddToCart = (product) => {
     dispatch(addToCart([product]));
-    navigate('/addTocart'); // Navigate immediately after dispatch
+    navigate("/addTocart"); // Navigate immediately after dispatch
   };
-  
-  
+
   return (
     <>
       <div className="font-[sans-serif] p-4 bg-white">
@@ -166,7 +163,8 @@ const ProductPage = () => {
                 </div>
                 <div className="mt-2">
                   <p className="text-gray-500 mt-1 text-sm">
-                    <strong>Description : </strong>{product.description}
+                    <strong>Description : </strong>
+                    {product.description}
                   </p>
                 </div>
                 <div className="flex items-center flex-wrap gap-2 mt-4">
@@ -188,10 +186,9 @@ const ProductPage = () => {
               </div>
               <hr className="my-6 border-gray-300" />
               <div>
-               
                 <div className="mt-4 flex flex-wrap gap-4">
                   <button
-                  onClick={() => handleAddToCart(product)}
+                    onClick={() => handleAddToCart(product)}
                     type="button"
                     className="px-2 py-2 w-[45%] border border-gray-300 bg-white hover:bg-gray-50 text-gray-800 text-sm font-semibold"
                   >
@@ -206,7 +203,7 @@ const ProductPage = () => {
                 </div>
               </div>
               <hr className="my-6 border-gray-300" />
-            
+
               <div className="flex justify-between gap-4 mt-6">
                 <div className="text-center">
                   <svg
@@ -275,7 +272,7 @@ const ProductPage = () => {
         </div>
 
         <div className="mt-6">
-          <Tabs product={product}/>
+          <Tabs product={product} />
         </div>
       </div>
     </>

@@ -19,6 +19,10 @@ const orderSchema = new mongoose.Schema({
   totalPrice: { type: Number, required: true },
   subTotal: { type: Number, required: true },
   tax: { type: Number, required: true },
+  paymentType:{ type: String,
+    enum: ["online", "cash"],
+    default: "cash"},
+  amount:{type:Number},
   status: {
     type: String,
     enum: ['Pending', 'Packed', 'Shipped', 'Delivered'],
