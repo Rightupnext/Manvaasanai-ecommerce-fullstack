@@ -127,8 +127,10 @@ function Menu() {
                         <img
                           key={index}
                           src={getImageURL(filename)}
-                          alt={`Product ${index + 1}`}
-                          className="aspect-[33/35] w-full object-contain"
+                          alt={`Product ${index + 1}`} 
+                        className="aspect-[33/25] w-full object-contain"
+
+
                         />
                       ))}
                     </div>
@@ -150,7 +152,7 @@ function Menu() {
                         
                         <button
                           type="button"
-                          className="text-sm px-2 h-9 font-semibold w-full bg-blue-600 hover:bg-blue-700 text-white tracking-wide ml-auto outline-none border-none rounded"
+                          className="text-sm px-2 h-9 font-semibold w-full bg-green-600 hover:bg-green-700 text-white tracking-wide ml-auto outline-none border-none rounded"
                         >
                           <Link to={`/products/${product._id}`}>
                             {product.available}
