@@ -88,7 +88,7 @@ const Hero = () => {
 
           <button 
             type="button" 
-            className="bg-gradient-to-r hover:bg-gradient-to-l from-green-600 to-green-800 hover:bg-green-500 text-white tracking-wide font-semibold text-sm py-3 px-6 rounded-lg w-max mx-auto mt-4 transition duration-300"
+            className="bg-gradient-to-r hover:bg-gradient-to-l from-green-600 to-green-800 hover:bg-green-500 text-white tracking-wide font-semibold text-sm py-3 px-6 rounded-lg w-max mx-auto mt-4 mb-4 transition duration-300"
           >
             Shop Now
           </button>
