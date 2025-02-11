@@ -114,6 +114,18 @@ const ProductForm = () => {
         .unwrap()
         .catch(console.error);
     }
+    setFormData({
+      title: "",
+      description: "",
+      category: "",
+      price: "",
+      discountprice: "",
+      offer: "",
+      packSize: "",
+      available: "",
+      images: [], // Reset images
+      nutrients: [], // Reset nutrients
+    });
   };
 
   return (
