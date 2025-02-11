@@ -3,16 +3,16 @@ import axiosInstance from "../axios";
 import { openModal } from "./modalSlice";
 export const addProduct = createAsyncThunk(
   "products/addProduct",
-  async (formData, thunkAPI) => {
+  async (formData, { dispatch, rejectWithValue }) => {
     try {
       const response = await axiosInstance.post("/api/products", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
+      dispatch(openModal({ type: "success", message: response.data?.message }));
       return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(
-        error.response?.data || "Something went wrong"
-      );
+      dispatch(openModal({ type: "error", message: "Failed to add product" }));
+      return rejectWithValue(error.response?.data || "Something went wrong");
     }
   }
 );
@@ -46,33 +46,29 @@ export const getProduct = createAsyncThunk(
 );
 export const deleteProduct = createAsyncThunk(
   "products/deleteProduct",
-  async (id, thunkAPI) => {
+  async (id, { dispatch, rejectWithValue }) => {
     try {
       const response = await axiosInstance.delete(`/api/products/${id}`);
+      dispatch(openModal({ type: "success", message: response.data?.message }));
       return { id, message: response.data.message };
     } catch (error) {
-      return thunkAPI.rejectWithValue(
-        error.response?.data || "Something went wrong"
-      );
+      dispatch(openModal({ type: "error", message: "Failed to delete product" }));
+      return rejectWithValue(error.response?.data || "Something went wrong");
     }
   }
 );
 export const updateProduct = createAsyncThunk(
   "products/updateProduct",
-  async ({ id, formData }, thunkAPI) => {
+  async ({ id, formData }, { dispatch, rejectWithValue }) => {
     try {
-      const response = await axiosInstance.put(
-        `/api/products/${id}`,
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
+      const response = await axiosInstance.put(`/api/products/${id}`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      dispatch(openModal({ type: "success", message: "Product updated successfully" }));
       return response.data.product;
     } catch (error) {
-      return thunkAPI.rejectWithValue(
-        error.response?.data || "Something went wrong"
-      );
+      dispatch(openModal({ type: "error", message: "Failed to update product" }));
+      return rejectWithValue(error.response?.data || "Something went wrong");
     }
   }
 );

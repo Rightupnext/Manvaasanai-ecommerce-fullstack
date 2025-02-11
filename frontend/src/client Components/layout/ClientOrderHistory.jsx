@@ -22,9 +22,11 @@ function ClientOrderHistory() {
   console.log("my orders", data?.orders);
 
   useEffect(() => {
-    dispatch(myOrders(data)); 
-  }, [dispatch,data]);
-
+    if (!data) {
+      dispatch(myOrders());
+    }
+  }, [dispatch, data]);
+  
   return (
     <>
       <section className="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
@@ -47,9 +49,9 @@ function ClientOrderHistory() {
                             Order ID:
                           </dt>
                           <dd className="mt-1.5 text-base font-semibold text-gray-900 dark:text-white">
-                            <a href="#" className="hover:underline">
+                            <p className="hover:underline">
                               #{order._id}
-                            </a>
+                            </p>
                           </dd>
                         </dl>
                         <dl className="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
