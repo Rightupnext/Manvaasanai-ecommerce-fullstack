@@ -19,9 +19,17 @@ export const fetchAllOrders = createAsyncThunk(
 // Async action to place an order
 export const placeOrder = createAsyncThunk(
   "orders/placeOrder",
-  async (orderData) => {
-    const response = await axiosInstance.post("/api/place-order", orderData);
-    return response.data;
+  async (orderData, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post("api/order/create-order", orderData);
+      dispatch(openModal({ type: "success", message: response.data?.message }));
+      return response.data;
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.message || "Something went wrong while placing the order.";
+      dispatch(openModal({ type: "error", message: errorMessage }));
+      return rejectWithValue(errorMessage);
+    }
   }
 );
 

@@ -76,7 +76,7 @@ function Navbar() {
               {[
                 { label: "Home", link: "/" },
                 { label: "About Us", link: "/about-us" },
-                { label: "Our Menu", link: "/our-menu" },
+                { label: "Our Menu", link: "/products" },
                 { label: "Contact Us", link: "/contact" },
               ].map((item, index) => (
                 <React.Fragment key={index}>

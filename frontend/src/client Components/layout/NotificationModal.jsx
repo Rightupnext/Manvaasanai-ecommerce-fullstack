@@ -22,7 +22,7 @@ const NotificationModal = () => {
   };
 
   return (
-    <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
+    <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-[100]">
       <div className="w-full max-w-lg bg-white shadow-lg rounded-lg p-6 relative">
         <svg
           xmlns="http://www.w3.org/2000/svg"
