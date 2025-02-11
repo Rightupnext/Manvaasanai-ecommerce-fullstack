@@ -41,6 +41,22 @@ function NewOrdersHistory() {
         floatingFilter: true,
       },
       {
+        headerName: "Payment ID",
+        field: "paymentId",
+        sortable: true,
+        width: 220,  // Corrected from 'with' to 'width'
+        filter: "agTextColumnFilter",
+        floatingFilter: true,
+      },
+      {
+        headerName: "Amount",
+        field: "amount",
+        sortable: true,
+        width: 220,  // Corrected from 'with' to 'width'
+        filter: "agTextColumnFilter",
+        floatingFilter: true,
+      },
+      {
         headerName: "Full Name",
         field: "fullName",
         sortable: true,
@@ -116,17 +132,7 @@ function NewOrdersHistory() {
   };
 
   const handleCloseModal = (updatedOrder) => {
-    if (updatedOrder) {
-      // Dispatch the action to update status in the Redux store
-      dispatch(updateOrderStatus(updatedOrder));
-
-      // Update the order status locally
-      const updatedOrders = orders.map((order) =>
-        order._id === updatedOrder._id ? updatedOrder : order
-      );
-      // Optionally, trigger any additional re-render if needed
-      // Example: setOrders(updatedOrders);
-    }
+    
     setOpenModal(false);
   };
 
@@ -155,6 +161,8 @@ function NewOrdersHistory() {
     _id: order._id,
     products: order.products || [],
     paymentType: order.paymentType,
+    paymentId:order.paymentId,
+    amount:order.amount
   })) || [];
 
   const defaultColDef = useMemo(() => ({
@@ -165,7 +173,7 @@ function NewOrdersHistory() {
   return (
     <>
       {/* Date Picker Section */}
-      <div className="flex gap-4 p-4">
+      <div className="flex gap-4 p-4 ">
         <div>
           <label className="block text-sm font-semibold mb-2">From Date:</label>
           <DatePicker
@@ -174,13 +182,14 @@ function NewOrdersHistory() {
             selectsStart
             startDate={startDate}
             endDate={endDate}
-            className="border border-gray-300 p-2 rounded-md"
+            className="border border-gray-300 p-2 rounded-md "
             placeholderText="Select start date"
             dateFormat="yyyy-MM-dd"
           />
         </div>
         <div>
           <label className="block text-sm font-semibold mb-2">To Date:</label>
+          
           <DatePicker
             selected={endDate}
             onChange={(date) => setEndDate(date)}

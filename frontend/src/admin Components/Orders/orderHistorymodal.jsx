@@ -99,7 +99,7 @@ function OrderHistorymodal({ handleCloseModal, order }) {
 
           {/* Order Card */}
           <div className="border p-4 rounded-lg mb-4">
-            <div className="flex justify-between items-center mb-3">
+            <div className="flex justify-around items-center mb-3">
               <div>
                 <p className="text-gray-500">Order number</p>
                 <p className="font-semibold">#{order._id}</p>
@@ -107,18 +107,38 @@ function OrderHistorymodal({ handleCloseModal, order }) {
               <div>
                 <p className="text-gray-500">Order Created</p>
                 <p className="font-semibold">
-                  {new Date(order.createdAt).toLocaleDateString("en-GB")}
+                {new Date(order.createdAt).toLocaleString("en-GB", {
+                  weekday: "long",
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                  hour: "numeric",
+                  minute: "numeric",
+                  second: "numeric",
+                  hour12: true,
+                })}
                 </p>
               </div>
               <div>
                 <p className="text-gray-500">Total amount</p>
-                <p className="font-semibold">$202.00</p>
+                <p className="font-semibold">${order.amount}</p>
               </div>
-              <div className="flex">
+              <div>
+                <p className="text-gray-500">PaymentId</p>
+                <p className="font-semibold">#{order.paymentId}</p>
+              </div>
+              <div >
                 <p className="text-gray-500">Payment Type</p>
-                <p className="px-4 py-2 rounded-lg bg-blue-600 text-white">
+               
+                <dd
+                className={`me-2 mt-1.5 inline-flex items-center rounded px-2.5 py-0.5 text-md font-medium
+                  ${order?.paymentType === "cash" ? "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300" : ""}
+                  ${order?.paymentType === "online" ? "bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-300" : ""}
+                 
+                `}
+              >
                   {order?.paymentType}
-                </p>
+              </dd>
               </div>
 
               <div>
@@ -137,8 +157,9 @@ function OrderHistorymodal({ handleCloseModal, order }) {
             </div>
             {/* Order Items */}
             <div className="border-t pt-3">
-              {order?.products.map((product) => (
+              {order?.products.map((product,index) => (
                 <div className="flex items-center gap-4 mb-3" key={product.product._id}>
+                  <p>No : {index+1}</p>
                   {product?.product?.image
                     ?.slice(0, 1)
                     .map((filename, index) => (

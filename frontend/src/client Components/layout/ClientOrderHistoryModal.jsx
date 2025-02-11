@@ -8,23 +8,23 @@ function ClientOrderHistoryModal({ handleCloseModal, data }) {
 
   // Triggering a product fetch for each product ID inside the modal
   useEffect(() => {
-    if (data?.orders?.length > 0) {
-      data.orders.forEach((order) => {
-        order.products.forEach((productItem) => {
+    if (data.length > 0) {
+      data.forEach((order) => {
+        data.products.forEach((productItem) => {
           // Dispatching product fetch for each product ID
           dispatch(getProduct(productItem.product?._id));
         });
       });
     }
   }, [dispatch, data]);
-
+  console.log("pop", data);
   const getImageURL = (filename) =>
     `http://localhost:5000/api/products/images/${filename}`;
 
   return (
     <>
       <div className="fixed inset-0 p-4 flex flex-wrap justify-center items-center w-full h-full z-[1000] before:fixed before:inset-0 before:w-full before:h-full before:bg-[rgba(0,0,0,0.5)] overflow-auto font-[sans-serif]">
-        <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-6 relative overflow-y-scroll">
+        <div className="w-full max-w-[70%] bg-white shadow-lg rounded-lg p-6 relative overflow-y-scroll">
           <div className="flex items-center pb-3 border-b border-gray-300">
             <h3 className="text-gray-800 text-xl font-bold flex-1">
               # My Order Details
@@ -45,98 +45,109 @@ function ClientOrderHistoryModal({ handleCloseModal, data }) {
               />
             </svg>
           </div>
-          <div className="my-6 h-[60vh]">
-            {data?.orders?.map((order, index) => (
-              <div key={index}>
-                <div>
-                  <h1>Shipping Adress</h1>
-                  <p>
-                    <strong>Full Name:</strong>{" "}
-                    {order?.shippingAddress?.fullName}
-                  </p>
-                  <p>
-                    <strong>Phone Number:</strong>{" "}
-                    {order?.shippingAddress?.phoneNumber}
-                  </p>
-                  <p>
-                    <strong>Order Status:</strong> {order.status}
-                  </p>
-                  <p>
-                    <strong>City:</strong> {order?.shippingAddress?.city}
-                  </p>
-                </div>
-                <div className="border p-4 rounded-lg mb-4">
-                  <div className="flex justify-between items-center mb-3">
-                    <div>
-                      <p className="text-gray-500">Order number</p>
-                      <p className="font-semibold">#{order._id}</p>
-                    </div>
-                    <div>
-                      <p className="text-gray-500">Order Date</p>
-                      <p className="font-semibold">
-                        {new Date(order.createdAt).toLocaleDateString("en-GB")}
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-gray-500">Total amount</p>
-                      <p className="font-semibold">$202.00</p>
-                    </div>
-                    <p
-                      className={`me-2 mt-1.5 inline-flex items-center rounded px-2.5 py-0.5 text-xs font-medium
+          <div className="my-6 ">
+            <div>
+              <div>
+                <h1>Shipping Adress</h1>
+                <p>
+                  <strong>Full Name:</strong> {data?.shippingAddress?.fullName}
+                </p>
+                <p>
+                  <strong>Phone Number:</strong>{" "}
+                  {data?.shippingAddress?.phoneNumber}
+                </p>
+                <p>
+                  <strong>Order Status:</strong> {data.status}
+                </p>
+                <p>
+                  <strong>City:</strong> {data?.shippingAddress?.city}
+                </p>
+              </div>
+              <div className="border p-4 rounded-lg mb-4">
+                <div className="flex justify-evenly items-center mb-3">
+                  <div>
+                    <p className="text-gray-500">Order number</p>
+                    <p className="font-semibold">#{data._id}</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-500">Payment Id</p>
+                    <p className="font-semibold">#{data.
+paymentId
+}</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-500">Order Date</p>
+                    <p className="font-semibold">
+                      {new Date(data.createdAt).toLocaleString("en-GB", {
+                        weekday: "long",
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                        hour: "numeric",
+                        minute: "numeric",
+                        second: "numeric",
+                        hour12: true,
+                      })}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-gray-500">Total amount</p>
+                    <p className="font-semibold">${data.amount}</p>
+                  </div>
+
+                  <p
+                    className={`me-2 mt-1.5 inline-flex items-center rounded px-2.5 py-0.5 text-xs font-medium
     ${
-      order.paymentType === "cash"
+      data.paymentType === "cash"
         ? "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300"
         : ""
     }
     ${
-      order.paymentType === "online"
+      data.paymentType === "online"
         ? "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300"
         : ""
     }
   `}
-                    >
-                      {order?.paymentType}
-                    </p>
+                  >
+                    {data?.paymentType}
+                  </p>
 
-                    <div></div>
-                  </div>
-                  {/* Order Items */}
-                  <div className="border-t pt-3">
-                    {order?.products.map((product) => (
-                      <div
-                        className="flex items-center gap-4 mb-3"
-                        key={product.product._id}
-                      >
-                        {product?.product?.image
-                          ?.slice(0, 1)
-                          .map((filename, index) => (
-                            <img
-                              src={getImageURL(filename)}
-                              alt="Product"
-                              className="w-12 h-12 rounded-md"
-                              key={index}
-                            />
-                          ))}
-                        <div className="flex-1">
-                          <p className="font-medium">
-                            {product?.product?.title}
-                          </p>
-                          <p className="text-gray-500 text-sm">
-                            Price :{product?.product?.discountprice}
-                          </p>
-                          <p className="text-gray-500 text-sm">
-                            Net Weight: {product?.product?.packSize}
-                          </p>
-                          <p className="text-gray-500 text-sm">
-                            Quantity: {product?.quantity}
-                          </p>
-                        </div>
+                  <div></div>
+                </div>
+                {/* Order Items */}
+                <div className="border-t pt-3 over">
+                  {data?.products.map((product) => (
+                    <div
+                      className="flex items-center gap-4 mb-3"
+                      key={product.product._id}
+                    >
+                      {product?.product?.image
+                        ?.slice(0, 1)
+                        .map((filename, index) => (
+                          <img
+                            src={getImageURL(filename)}
+                            alt="Product"
+                            className="w-12 h-12 rounded-md"
+                            key={index}
+                          />
+                        ))}
+                      <div className="flex-1">
+                        <p className="font-medium">{product?.product?.title}</p>
+                        <p className="text-gray-500 text-sm">
+                          Price :{product?.product?.discountprice}
+                        </p>
+                        <p className="text-gray-500 text-sm">
+                          Net Weight: {product?.product?.packSize}
+                        </p>
+                        <p className="text-gray-500 text-sm">
+                          Quantity: {product?.quantity}
+                        </p>
                       </div>
-                    ))}
-                  </div>
+                    </div>
+                  ))}
                 </div>
               </div>
-            ))}
+            </div>
           </div>
           <div className="border-t border-gray-300 pt-6 flex justify-end gap-4">
             <button

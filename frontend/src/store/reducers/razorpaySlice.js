@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axiosInstance from "../axios";
 
 // Initial state
 const initialState = {
@@ -13,15 +14,14 @@ export const createOrder = createAsyncThunk(
   "razorpay/createOrder",
   async (amount, { rejectWithValue }) => {
     try {
-      const response = await fetch("http://localhost:5000/api/razorpay/create-order", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount }),
-      });
+      // Axios request to create order
+      const response = await axiosInstance.post(
+        "http://localhost:5000/api/razorpay/create-order",
+        { amount }
+      );
 
-      if (!response.ok) throw new Error("Failed to create order");
-
-      return await response.json();
+      // Axios response is already parsed, no need to call .json()
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -33,15 +33,13 @@ export const verifyPayment = createAsyncThunk(
   "razorpay/verifyPayment",
   async (paymentData, { rejectWithValue }) => {
     try {
-      const response = await fetch("http://localhost:5000/api/razorpay/verify-payment", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(paymentData),
-      });
+      // Axios request to verify payment
+      const response = await axiosInstance.post(
+        "http://localhost:5000/api/razorpay/verify-payment",
+        paymentData
+      );
 
-      if (!response.ok) throw new Error("Payment verification failed");
-
-      return await response.json();
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
     }

@@ -9,7 +9,7 @@ function AddToCartPage() {
   const dispatch = useDispatch();
   const { shippingAndTax } = useSelector((state) => state.shippingAndTax);
   const cartItems = useSelector((state) => state.cart.cartItems);
-  
+
   const [localItems, setLocalItems] = useState(cartItems);
   const [quantities, setQuantities] = useState({});
   const [openModal, setOpenModal] = useState(false);
@@ -167,7 +167,7 @@ function AddToCartPage() {
           </div>
         </div>
       </div>
-      {openModal && <CheckOutModel handleCloseModal={handleCloseModal}  totalAmount={totalAmount}/>}
+      {openModal && <CheckOutModel handleCloseModal={handleCloseModal}  totalAmount={totalAmount} quantities={quantities}/>}
       <ClientOrderHistory/>
     </>
   );

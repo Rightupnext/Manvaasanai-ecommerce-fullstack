@@ -68,7 +68,7 @@ function App() {
         <Route
           path="/addTocart"
           element={
-            <ProtectedRoute allowedRoles={['client']}>
+            <ProtectedRoute allowedRoles={['client',"admin"]}>
               <AddToCartPage />
             </ProtectedRoute>
           }
@@ -94,6 +94,7 @@ function App() {
           <Route index element={<ParentChart />} />
           <Route path="category" element={<CategoryList />} />
           <Route path="category/add" element={<CategoryForm />} />
+          <Route path="category/edit/:id" element={<CategoryForm />} />
           <Route path="category/filter" element={<CategoryProductPage />} />
           <Route path="products" element={<ProductsList />} />
           <Route path="products/add" element={<ProductsForm />} />

@@ -3,8 +3,9 @@ import Payment from "./Payment";
 import AddressForm from "./AddressForm";
 import OrderConfirmSuccessMessage from "./OrderConfirmSuccessMessage";
 
-function CheckOutModel({ handleCloseModal,totalAmount }) {
+function CheckOutModel({ handleCloseModal, totalAmount, quantities }) {
   const [currentStep, setCurrentStep] = useState(0);
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
   const [shippingAddress, setShippingAddress] = useState({
     fullName: "",
     street: "",
@@ -22,6 +23,13 @@ function CheckOutModel({ handleCloseModal,totalAmount }) {
     });
   };
 
+  const isAddressValid = Object.values(shippingAddress).every((field) => field.trim() !== "");
+
+  const handlePaymentSuccess = () => {
+    setPaymentSuccess(true);
+    setCurrentStep(2); // Automatically move to Step 3 after payment
+  };
+
   const steps = [
     {
       title: "Personal Info",
@@ -33,23 +41,22 @@ function CheckOutModel({ handleCloseModal,totalAmount }) {
         />
       ),
     },
-    { title: "Payment", content: <Payment totalAmount={totalAmount} /> },
+    {
+      title: "Payment",
+      content: <Payment totalAmount={totalAmount} quantities={quantities} onSuccess={handlePaymentSuccess} setCurrentStep={setCurrentStep} />,
+    },
     { title: "Order Completed", content: <OrderConfirmSuccessMessage /> },
   ];
 
   const handleNextStep = () => {
     if (currentStep === 0) {
-      // Save the address to local storage when moving to the payment step
-      localStorage.setItem(
-        "manvaasanai_Shipping_Address",
-        JSON.stringify(shippingAddress)
-      );
+      localStorage.setItem("manvaasanai_Shipping_Address", JSON.stringify(shippingAddress));
     }
     setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
   };
 
   useEffect(() => {
-    if (currentStep === steps.length - 1) {
+    if (currentStep === 2) {
       const timer = setTimeout(() => {
         handleCloseModal();
       }, 5000);
@@ -58,7 +65,7 @@ function CheckOutModel({ handleCloseModal,totalAmount }) {
   }, [currentStep, handleCloseModal]);
 
   return (
-    <div className="fixed inset-0 p-4 flex flex-wrap justify-center items-center w-full z-[1000] before:fixed before:inset-0 before:w-full before:h-full before:bg-[rgba(0,0,0,0.5)] overflow-auto font-[sans-serif]">
+    <div className="fixed inset-0 p-4 flex flex-wrap justify-center items-center w-full z-[1000] before:fixed before:inset-0 before:w-full before:h-full before:bg-[rgba(0,0,0,0.5)] overflow-auto font-[sans-serif] z-[10]">
       <div className="w-full max-w-4xl bg-white shadow-lg rounded-3xl p-6 relative">
         <svg
           onClick={handleCloseModal}
@@ -79,28 +86,16 @@ function CheckOutModel({ handleCloseModal,totalAmount }) {
                     currentStep === index ? "bg-blue-600" : "bg-gray-300"
                   } flex items-center justify-center rounded-full`}
                 >
-                  <span className="text-sm text-white font-bold">
-                    {index + 1}
-                  </span>
+                  <span className="text-sm text-white font-bold">{index + 1}</span>
                 </div>
                 {index < steps.length - 1 && (
-                  <div
-                    className={`w-full h-[3px] mx-4 rounded-lg ${
-                      currentStep >= index ? "bg-blue-600" : "bg-gray-300"
-                    }`}
-                  />
+                  <div className={`w-full h-[3px] mx-4 rounded-lg ${currentStep >= index ? "bg-blue-600" : "bg-gray-300"}`} />
                 )}
               </div>
               <div className="mt-2 mr-4">
-                <h6 className="text-sm font-bold text-blue-500">
-                  {step.title}
-                </h6>
+                <h6 className="text-sm font-bold text-blue-500">{step.title}</h6>
                 <p className="text-xs text-gray-500">
-                  {currentStep > index
-                    ? "Completed"
-                    : currentStep === index
-                    ? "In Progress"
-                    : "Pending"}
+                  {currentStep > index ? "Completed" : currentStep === index ? "In Progress" : "Pending"}
                 </p>
               </div>
             </div>
@@ -113,15 +108,16 @@ function CheckOutModel({ handleCloseModal,totalAmount }) {
           <div className="flex justify-between mt-4">
             <button
               onClick={() => setCurrentStep((prev) => Math.max(prev - 1, 0))}
-              disabled={currentStep === 0}
-              className="px-4 py-2 bg-gray-300 text-gray-600 rounded-lg"
+              disabled={currentStep === 0 || paymentSuccess} // Disable if payment is successful
+              className={`px-4 py-2 rounded-lg ${currentStep === 0 || paymentSuccess ? "bg-gray-300 text-gray-600" : "bg-gray-600 text-white"}`}
             >
               Previous
             </button>
+
             <button
               onClick={handleNextStep}
-              disabled={currentStep === steps.length - 1}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg"
+              disabled={currentStep === steps.length - 1 || (currentStep === 0 && !isAddressValid)}
+              className={`px-4 py-2 rounded-lg ${currentStep === steps.length - 1 || (currentStep === 0 && !isAddressValid) ? "bg-gray-300 text-gray-600" : "bg-blue-600 text-white"}`}
             >
               {currentStep === steps.length - 1 ? "Close" : "Next"}
             </button>

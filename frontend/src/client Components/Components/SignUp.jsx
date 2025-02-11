@@ -5,7 +5,7 @@ import logo from "../../images/assets/brahmmis logo recreate.png"
 import loginImg from "../../images/assets/login-img.jpg"
 import { registerUser } from "../../store/reducers/userReducers";
 import { Link } from "react-router-dom";
-
+import Swal from 'sweetalert2';
 export default function SignUp() {
   const dispatch = useDispatch();
   const { status, error } = useSelector((state) => state.auth.register);
@@ -20,28 +20,35 @@ export default function SignUp() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+  
     if (password !== cpassword) {
-      alert("Passwords do not match!");
+      Swal.fire({
+        icon: 'warning',
+        title: 'Passwords do not match!',
+        text: 'Please make sure both passwords are the same.',
+      });
       return;
     }
-
+  
     if (!termsAccepted) {
-      alert("You must accept the terms and conditions to register.");
+      Swal.fire({
+        icon: 'warning',
+        title: 'Terms & Conditions',
+        text: 'You must accept the terms and conditions to register.',
+      });
       return;
     }
-
+  
     const userData = {
       name,
       email,
       password,
       role,
     };
-
+  
     // Dispatch the registerUser action with the userData
     dispatch(registerUser(userData));
   };
-
   return (
     <div className="py-16">
       <div className="flex bg-white rounded-lg shadow-lg overflow-hidden mx-auto max-w-sm lg:max-w-4xl">
@@ -159,13 +166,16 @@ export default function SignUp() {
               </label>
             </div>
             <div className="mt-8">
-              <button
-                type="submit"
-                disabled={status === "pending" || !termsAccepted}
-                className="bg-gray-700 text-white font-bold py-1 px-3 w-full rounded hover:bg-gray-600"
-              >
-                {status === "pending" ? "Registering..." : "Sign Up"}
-              </button>
+            <button
+  type="submit"
+  disabled={status === "pending" || !termsAccepted}
+  className={`${
+  !termsAccepted ? "bg-gray-300 text-white font-bold py-1 px-3 w-full rounded cursor-not-allowed" : "bg-gray-700 text-white font-bold py-1 px-3 w-full rounded hover:bg-gray-600"
+  }`}
+>
+  {status === "pending" ? "Registering..." : "Sign Up"}
+</button>
+
             </div>
           </form>
           <div className="mt-4 flex items-center justify-between">

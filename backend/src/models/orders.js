@@ -16,13 +16,14 @@ const orderSchema = new mongoose.Schema({
     postalCode: { type: String, required: true },
     phoneNumber: { type: String, required: true }, // Phone number
   },
-  totalPrice: { type: Number, required: true },
-  subTotal: { type: Number, required: true },
-  tax: { type: Number, required: true },
+  totalPrice: { type: Number,  },
+  subTotal: { type: Number,  },
+  tax: { type: Number, },
   paymentType:{ type: String,
     enum: ["online", "cash"],
-    default: "cash"},
+    default: "online"},
   amount:{type:Number},
+  paymentId:{type:String},
   status: {
     type: String,
     enum: ['Pending', 'Packed', 'Shipped', 'Delivered'],
