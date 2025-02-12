@@ -71,11 +71,12 @@ const Payment = ({ totalAmount, quantities,setCurrentStep }) => {
   };
 
   return (
+    <div className="flex justify-center">
     <button
-      onClick={loadRazorpay} 
+      onClick={loadRazorpay}
       disabled={loading}
       type="button"
-      className="text-gray-900 bg-[#F7BE38] hover:bg-[#F7BE38]/90 focus:ring-4 focus:outline-none focus:ring-[#F7BE38]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#F7BE38]/50 me-2 mb-2"
+      className="text-gray-900 justify-center bg-[#F7BE38] hover:bg-[#F7BE38]/90 focus:ring-4 focus:outline-none focus:ring-[#F7BE38]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#F7BE38]/50 me-2 mb-2"
     >
       <svg
         className="w-4 h-4 me-2 -ms-1"
@@ -94,6 +95,8 @@ const Payment = ({ totalAmount, quantities,setCurrentStep }) => {
       </svg>
       {loading ? "Processing..." : `Pay Now ${totalAmount}`}
     </button>
+  </div>
+  
   );
 };
 

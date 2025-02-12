@@ -63,21 +63,19 @@ function ClientOrderHistoryModal({ handleCloseModal, data }) {
                   <strong>City:</strong> {data?.shippingAddress?.city}
                 </p>
               </div>
-              <div className="border p-4 rounded-lg mb-4">
-                <div className="flex justify-evenly items-center mb-3">
-                  <div>
+              <div className="border p-2 rounded-lg mb-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:flex lg:justify-evenly items-center mb-3 sm:flex-wrap">
+                  <div className="sm:flex sm:flex-col">
                     <p className="text-gray-500">Order number</p>
-                    <p className="font-semibold">#{data._id}</p>
+                    <p className="font-semibold break-words min-w-0">#{data._id}</p>
                   </div>
-                  <div>
+                  <div className="sm:flex sm:flex-col">
                     <p className="text-gray-500">Payment Id</p>
-                    <p className="font-semibold">#{data.
-paymentId
-}</p>
+                    <p className="font-semibold break-words min-w-0">#{data.paymentId}</p>
                   </div>
-                  <div>
+                  <div className="sm:flex sm:flex-col">
                     <p className="text-gray-500">Order Date</p>
-                    <p className="font-semibold">
+                    <p className="font-semibold break-words min-w-0">
                       {new Date(data.createdAt).toLocaleString("en-GB", {
                         weekday: "long",
                         year: "numeric",
@@ -90,63 +88,51 @@ paymentId
                       })}
                     </p>
                   </div>
-                  <div>
+                  <div className="sm:flex sm:flex-col">
                     <p className="text-gray-500">Total amount</p>
-                    <p className="font-semibold">${data.amount}</p>
+                    <p className="font-semibold break-words min-w-0">${data.amount}</p>
                   </div>
-
                   <p
-                    className={`me-2 mt-1.5 inline-flex items-center rounded px-2.5 py-0.5 text-xs font-medium
-    ${
-      data.paymentType === "cash"
-        ? "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300"
-        : ""
-    }
-    ${
-      data.paymentType === "online"
-        ? "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300"
-        : ""
-    }
-  `}
+                    className={`me-2 mt-1.5 inline-flex items-center rounded px-2.5 py-0.5 text-xs font-medium sm:flex sm:flex-col
+                      ${
+                        data.paymentType === "cash"
+                          ? "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300"
+                          : ""
+                      }
+                      ${
+                        data.paymentType === "online"
+                          ? "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300"
+                          : ""
+                      }
+                    `}
                   >
                     {data?.paymentType}
                   </p>
+                </div>
 
-                  <div></div>
-                </div>
-                {/* Order Items */}
-                <div className="border-t pt-3 over">
-                  {data?.products.map((product) => (
-                    <div
-                      className="flex items-center gap-4 mb-3"
-                      key={product.product._id}
-                    >
-                      {product?.product?.image
-                        ?.slice(0, 1)
-                        .map((filename, index) => (
-                          <img
-                            src={getImageURL(filename)}
-                            alt="Product"
-                            className="w-12 h-12 rounded-md"
-                            key={index}
-                          />
-                        ))}
-                      <div className="flex-1">
-                        <p className="font-medium">{product?.product?.title}</p>
-                        <p className="text-gray-500 text-sm">
-                          Price :{product?.product?.discountprice}
-                        </p>
-                        <p className="text-gray-500 text-sm">
-                          Net Weight: {product?.product?.packSize}
-                        </p>
-                        <p className="text-gray-500 text-sm">
-                          Quantity: {product?.quantity}
-                        </p>
-                      </div>
+  {/* Order Items */}
+              <div className="border-t pt-3">
+                {data?.products.map((product, index) => (
+                  <div className="flex items-center gap-4 mb-3" key={index}>
+                    {product?.product?.image?.slice(0, 1).map((filename, index) => (
+                      <img
+                        src={getImageURL(filename)}
+                        alt="Product"
+                        className="w-12 h-12 rounded-md"
+                        key={index}
+                      />
+                    ))}
+                    <div className="flex-1 sm:flex sm:flex-col">
+                      <p className="font-medium">{product?.product?.title}</p>
+                      <p className="text-gray-500 text-sm">Price: {product?.product?.discountprice}</p>
+                      <p className="text-gray-500 text-sm">Net Weight: {product?.product?.packSize}</p>
+                      <p className="text-gray-500 text-sm">Quantity: {product?.quantity}</p>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
               </div>
+</div>
+
             </div>
           </div>
           <div className="border-t border-gray-300 pt-6 flex justify-end gap-4">
