@@ -28,7 +28,7 @@ function CheckOutForm() {
                           Quantity <span className="ml-auto">2</span>
                         </li>
                         <li className="flex flex-wrap gap-4">
-                          Total Price <span className="ml-auto">$40</span>
+                          Total Price <span className="ml-auto">₹40</span>
                         </li>
                       </ul>
                     </div>
@@ -52,7 +52,7 @@ function CheckOutForm() {
                           Quantity <span className="float-right">2</span>
                         </li>
                         <li>
-                          Total Price <span className="float-right">$40</span>
+                          Total Price <span className="float-right">₹40</span>
                         </li>
                       </ul>
                     </div>
@@ -76,7 +76,7 @@ function CheckOutForm() {
                           Quantity <span className="float-right">2</span>
                         </li>
                         <li>
-                          Total Price <span className="float-right">$40</span>
+                          Total Price <span className="float-right">₹40</span>
                         </li>
                       </ul>
                     </div>
@@ -100,7 +100,7 @@ function CheckOutForm() {
                           Quantity <span className="float-right">2</span>
                         </li>
                         <li>
-                          Total Price <span className="float-right">$40</span>
+                          Total Price <span className="float-right">₹40</span>
                         </li>
                       </ul>
                     </div>
@@ -109,7 +109,7 @@ function CheckOutForm() {
               </div>
               <div className="md:absolute md:left-0 md:bottom-0 bg-gray-200 w-full p-4">
                 <h4 className="flex flex-wrap gap-4 text-sm lg:text-base text-gray-800">
-                  Total <span className="ml-auto">$84.00</span>
+                  Total <span className="ml-auto">₹84.00</span>
                 </h4>
               </div>
             </div>

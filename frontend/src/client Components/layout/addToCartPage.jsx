@@ -56,7 +56,7 @@ function AddToCartPage() {
     });
 
     const taxAmount = (taxRate / 100) * subTotal;
-    const totalAmount = subTotal + taxAmount ;
+    const totalAmount = Math.round(subTotal + taxAmount );
 
     return { subTotal, taxAmount, totalAmount };
   };
@@ -129,7 +129,7 @@ function AddToCartPage() {
                             </button>
                           </div>
                           <div className="flex items-center">
-                            <h4 className="text-lg font-bold text-gray-800">${product.discountprice}</h4>
+                            <h4 className="text-lg font-bold text-gray-800">₹{product.discountprice}</h4>
                             <svg
                               onClick={() => handleRemove(product._id)}
                               xmlns="http://www.w3.org/2000/svg"
@@ -151,13 +151,13 @@ function AddToCartPage() {
               <h3 className="text-lg font-bold text-gray-800">Order Summary</h3>
               <ul className="text-gray-800 text-sm divide-y mt-4">
                 <li className="flex flex-wrap gap-4 py-3">
-                  Subtotal <span className="ml-auto font-bold">${subTotal.toFixed(2)}</span>
+                  Subtotal <span className="ml-auto font-bold">₹{subTotal.toFixed(2)}</span>
                 </li>
                 <li className="flex flex-wrap gap-4 py-3">
                   Tax <span className="ml-auto font-bold">{tax.toFixed(2)} %</span>
                 </li>
                 <li className="flex flex-wrap gap-4 py-3 font-bold">
-                  Total <span className="ml-auto">${totalAmount.toFixed(2)}</span>
+                  Total <span className="ml-auto">₹{totalAmount.toFixed(2)}</span>
                 </li>
               </ul>
               <button onClick={handleOpenModal} className="mt-4 w-full bg-[#34bd71] text-white rounded-md p-2">

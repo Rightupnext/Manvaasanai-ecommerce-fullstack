@@ -158,7 +158,7 @@ function OrderHistorymodal({ handleCloseModal, order }) {
             {/* Order Items */}
             <div className="border-t pt-3">
               {order?.products.map((product,index) => (
-                <div className="flex items-center gap-4 mb-3" key={product.product._id}>
+                <div className="flex items-center gap-4 mb-3" key={index}>
                   <p>No : {index+1}</p>
                   {product?.product?.image
                     ?.slice(0, 1)

@@ -61,51 +61,58 @@ const ProductPage = () => {
         <div className="lg:max-w-6xl max-w-xl mx-auto">
           <div className="grid items-start grid-cols-1 lg:grid-cols-2 gap-8 max-lg:gap-12 max-sm:gap-8">
             <div className="w-full lg:sticky top-0">
-              <div className="flex flex-col gap-4">
-                <div className="bg-white shadow p-2">
-                  {selectedImage && (
-                    <ReactImageMagnify
-                      className="w-full aspect-[11/8] object-cover object-top"
-                      {...{
-                        smallImage: {
-                          alt: "Product",
-                          src: getImageURL(selectedImage),
-                          width: 543,
-                          height: 400,
-                        },
-                        largeImage: {
-                          src: getImageURL(selectedImage),
-                          width: 1200,
-                          height: 1200,
-                        },
-                        enlargedImageContainerDimensions: {
-                          width: "150%",
-                          height: "100%",
-                        },
-                        isHintEnabled: true,
-                        enlargedImagePosition: "beside",
-                      }}
-                    />
-                  )}
-                </div>
-                <div className="bg-white p-2 w-full max-w-full overflow-auto">
-                  <div className="flex  justify-evenly flex-row gap-4 py-2 shrink-0">
-                    {product.image?.map((filename, index) => (
-                      <img
-                        key={index}
-                        className={
-                          selectedImage === filename
-                            ? `border-[2px] border-green-500 w-16 h-16 aspect-square object-cover object-top cursor-pointer shadow-md border-b-2`
-                            : "w-16 h-16 aspect-square object-cover object-top cursor-pointer shadow-md border-b-2 border-black"
-                        }
-                        src={getImageURL(filename)}
-                        alt={`Thumbnail ${index + 1}`}
-                        onClick={() => setSelectedImage(filename)}
-                      />
-                    ))}
-                  </div>
-                </div>
-              </div>
+            <div className="flex flex-col gap-4">
+  {/* Image Magnifier Section */}
+  <div className="bg-white shadow p-2 w-full lg:w-1/2 xl:w-2/5 xl:custom-xl-width">
+  {selectedImage && (
+    <ReactImageMagnify
+      className="w-full aspect-[11/8] object-cover object-top"
+      {...{
+        smallImage: {
+          alt: "Product",
+          src: getImageURL(selectedImage),
+          width: 543,
+          height: 400,
+          ...(window.innerWidth < 640 && { width: 300, height: 300 }),
+        },
+        largeImage: {
+          src: getImageURL(selectedImage),
+          width: 1200,
+          height: 1200,
+        },
+        enlargedImageContainerDimensions: {
+          width: "150%",
+          height: "100%",
+        },
+        isHintEnabled: true,
+        enlargedImagePosition: window.innerWidth < 640 ? "over" : "beside",
+      }}
+    />
+  )}
+</div>
+
+
+
+  {/* Thumbnail Section */}
+  <div className="bg-white p-2 w-full max-w-full overflow-auto">
+    <div className="flex justify-evenly flex-row gap-4 py-2 shrink-0">
+      {product.image?.map((filename, index) => (
+        <img
+          key={index}
+          className={`w-16 h-16 aspect-square object-cover object-top cursor-pointer shadow-md border-b-2 ${
+            selectedImage === filename
+              ? "border-[2px] border-green-500"
+              : "border-black"
+          }`}
+          src={getImageURL(filename)}
+          alt={`Thumbnail ${index + 1}`}
+          onClick={() => setSelectedImage(filename)}
+        />
+      ))}
+    </div>
+  </div>
+</div>
+
             </div>
             <div className="w-full">
               <div>
@@ -169,10 +176,10 @@ const ProductPage = () => {
                 </div>
                 <div className="flex items-center flex-wrap gap-2 mt-4">
                   <p className="text-gray-500 text-base">
-                    <strike>${product.price}</strike>
+                    <strike>₹{product.price}</strike>
                   </p>
                   <h4 className="text-green-800 text-2xl sm:text-3xl font-bold">
-                    ${product.discountprice}
+                  ₹{product.discountprice}
                   </h4>
                   <div className="flex py-1 px-2 bg-green-600 font-semibold !ml-4">
                     <span className="text-white text-sm">{product.offer}</span>
@@ -263,7 +270,7 @@ const ProductPage = () => {
                     </g>
                   </svg>
                   <p className="text-gray-500 text-xs sm:text-sm mt-3">
-                    Free Delivery On Orders Above $100
+                    Free Delivery On Orders Above ₹100
                   </p>
                 </div>
               </div>
