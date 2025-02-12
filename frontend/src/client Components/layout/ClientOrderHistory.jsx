@@ -6,26 +6,23 @@ import ClientOrderHistoryModal from "./ClientOrderHistoryModal";
 function ClientOrderHistory() {
   const dispatch = useDispatch();
   const [openModal, setOpenModal] = useState(false);
-  const [selectOrder, setSelectOrder] = useState(null); // Ensure the default value is null
+  const [selectOrder, setSelectOrder] = useState(null); 
   const { data, status, error } = useSelector((state) => state.auth.myOrders);
 
   const handleOpenModal = (order) => {
-    setOpenModal(true); // Open the modal
-    setSelectOrder(order); // Set the selected order
+    setOpenModal(true); 
+    setSelectOrder(order); 
   };
 
   const handleCloseModal = () => {
-    setOpenModal(false); // Close the modal
-    setSelectOrder(null); // Reset the selected order
+    setOpenModal(false);
+    setSelectOrder(null);
   };
 
-  console.log("my orders", data?.orders);
 
   useEffect(() => {
-    if (!data) {
-      dispatch(myOrders());
-    }
-  }, [dispatch, data]);
+    dispatch(myOrders());
+  }, [dispatch]);
   
   return (
     <>
@@ -123,7 +120,7 @@ function ClientOrderHistory() {
       {openModal && selectOrder && (
         <ClientOrderHistoryModal
           handleCloseModal={handleCloseModal}
-          data={selectOrder} // Send the selected order to the modal
+          data={selectOrder}
         />
       )}
     </>

@@ -9,9 +9,7 @@ export const fetchAllOrders = createAsyncThunk(
       const response = await axiosInstance.get(`/api/order/`);
       return response.data;
     } catch (error) {
-      return rejectWithValue(
-        error.response ? error.response.data : error.message
-      );
+      return rejectWithValue(error.response?.data || error.message);
     }
   }
 );
@@ -21,12 +19,11 @@ export const placeOrder = createAsyncThunk(
   "orders/placeOrder",
   async (orderData, { dispatch, rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post("api/order/create-order", orderData);
+      const response = await axiosInstance.post("/api/order/create-order", orderData);
       dispatch(openModal({ type: "success", message: response.data?.message }));
       return response.data;
     } catch (error) {
-      const errorMessage =
-        error.response?.data?.message || "Something went wrong while placing the order.";
+      const errorMessage = error.response?.data?.message || "Error placing order.";
       dispatch(openModal({ type: "error", message: errorMessage }));
       return rejectWithValue(errorMessage);
     }
@@ -36,34 +33,38 @@ export const placeOrder = createAsyncThunk(
 // Async action to update the order status
 export const updateOrderStatus = createAsyncThunk(
   "orders/updateOrderStatus",
-  async ({ orderId, status }, { dispatch }) => {
+  async ({ orderId, status }, { dispatch, rejectWithValue }) => {
     try {
-      const response = await axiosInstance.put(`/api/order/status-update/${orderId}/status`, {
-        status,
-      });
-      
-      // Dispatch the success modal
+      const response = await axiosInstance.put(`/api/order/status-update/${orderId}/status`, { status });
       dispatch(openModal({ type: "success", message: response.data?.message }));
-
-      // Return the response data for successful API call
       return response.data;
     } catch (error) {
-      // Handle the error properly
-      const errorMessage = error.response ? error.response.data : error.message;
+      const errorMessage = error.response?.data?.message || "Error updating order status.";
       dispatch(openModal({ type: "error", message: errorMessage }));
-      
-      // Returning an empty object or any value you wish to handle error gracefully
-      return { error: errorMessage };
+      return rejectWithValue(errorMessage);
     }
   }
 );
 
+// Fetch total online transaction amount
+export const fetchTotalOnlineTransaction = createAsyncThunk(
+  "orders/fetchTotalOnlineTransaction",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get(`api/order/total-online-amount-trnsaction`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
 
 const initialState = {
   orders: [],
   order: null,
   status: "idle",
   error: null,
+  totalOnlineTransaction: { totalAmount: 0, transactions: [] },
 };
 
 const ordersSlice = createSlice({
@@ -72,6 +73,7 @@ const ordersSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      // Fetch all orders
       .addCase(fetchAllOrders.pending, (state) => {
         state.status = "loading";
       })
@@ -81,7 +83,7 @@ const ordersSlice = createSlice({
       })
       .addCase(fetchAllOrders.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.error.message;
+        state.error = action.payload;
       });
 
     // Place an order
@@ -95,7 +97,7 @@ const ordersSlice = createSlice({
       })
       .addCase(placeOrder.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.error.message;
+        state.error = action.payload;
       });
 
     // Update the order status
@@ -106,16 +108,27 @@ const ordersSlice = createSlice({
       .addCase(updateOrderStatus.fulfilled, (state, action) => {
         state.status = "succeeded";
         const updatedOrder = action.payload;
-        const index = state.orders.findIndex(
-          (order) => order._id === updatedOrder._id
+        state.orders = state.orders.map((order) =>
+          order._id === updatedOrder._id ? updatedOrder : order
         );
-        if (index >= 0) {
-          state.orders[index] = updatedOrder;
-        }
       })
       .addCase(updateOrderStatus.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.error.message;
+        state.error = action.payload;
+      });
+
+    // Fetch total online transactions
+    builder
+      .addCase(fetchTotalOnlineTransaction.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchTotalOnlineTransaction.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.totalOnlineTransaction = action.payload;
+      })
+      .addCase(fetchTotalOnlineTransaction.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
       });
   },
 });

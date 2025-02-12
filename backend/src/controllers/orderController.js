@@ -111,3 +111,21 @@ exports.updateOrderStatus = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+exports.getTotalAmountTrnsationOnline = async (req, res) => {
+  try {
+
+    const orders = await Order.find();
+
+
+    const totalAmount = orders.reduce((sum, order) => sum + (order.amount || 0), 0);
+
+    res.status(200).json({
+      success: true,
+      totalAmount, 
+      // orders, 
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};

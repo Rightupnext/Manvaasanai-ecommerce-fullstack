@@ -4,7 +4,7 @@ import { FaLock, FaLockOpen } from "react-icons/fa";
 import logo from "../../images/assets/brahmmis logo recreate.png"
 import loginImg from "../../images/assets/login-img.jpg"
 import { registerUser } from "../../store/reducers/userReducers";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
 export default function SignUp() {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ export default function SignUp() {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [cpasswordVisible, setCPasswordVisible] = useState(false);
   const [termsAccepted, setTermsAccepted] = useState(false); // State for checkbox
-
+const navigate=useNavigate()
   const handleSubmit = (e) => {
     e.preventDefault();
   
@@ -47,7 +47,13 @@ export default function SignUp() {
     };
   
     // Dispatch the registerUser action with the userData
-    dispatch(registerUser(userData));
+    dispatch(registerUser(userData)).then(()=>{
+      setName("");
+      setEmail('');
+      setCPassword('');
+      setPassword('');
+      navigate('/signin')
+    });
   };
   return (
     <div className="py-16">
@@ -180,7 +186,7 @@ export default function SignUp() {
           </form>
           <div className="mt-4 flex items-center justify-between">
             <span className="border-b w-1/5 md:w-1/4" />
-            <Link to="/signup" className="text-xs text-gray-500 uppercase">
+            <Link to="/signin" className="text-xs text-gray-500 uppercase">
               or Sign in
             </Link>
             <span className="border-b w-1/5 md:w-1/4" />

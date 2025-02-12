@@ -42,8 +42,8 @@ function AddToCartPage() {
   };
 
   const getImageURL = (filename) =>
-    filename ? `http://localhost:5000/api/products/images/${filename}` : "";
-
+    filename ? `${import.meta.env.VITE_BACKEND_URL}/api/products/images/${filename}` : "";
+  const shippingAmount = shippingAndTax?.shippingAndTax?.[0]?.ShippingAmount || 0;
   const tax = shippingAndTax?.shippingAndTax?.[0]?.tax || 0;
   const calculateTotal = () => {
     const taxRate = shippingAndTax?.shippingAndTax?.[0]?.tax || 0;
@@ -56,7 +56,7 @@ function AddToCartPage() {
     });
 
     const taxAmount = (taxRate / 100) * subTotal;
-    const totalAmount = Math.round(subTotal + taxAmount );
+    const totalAmount = Math.round(subTotal + taxAmount +shippingAmount);
 
     return { subTotal, taxAmount, totalAmount };
   };
@@ -155,6 +155,9 @@ function AddToCartPage() {
                 </li>
                 <li className="flex flex-wrap gap-4 py-3">
                   Tax <span className="ml-auto font-bold">{tax.toFixed(2)} %</span>
+                </li>
+                <li className="flex flex-wrap gap-4 py-3">
+                  Shipping Charges : <span className="ml-auto font-bold">₹ {shippingAmount.toFixed(2)} </span>
                 </li>
                 <li className="flex flex-wrap gap-4 py-3 font-bold">
                   Total <span className="ml-auto">₹{totalAmount.toFixed(2)}</span>

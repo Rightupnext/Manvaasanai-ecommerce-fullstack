@@ -22,5 +22,8 @@ export default defineConfig({
     commonjsOptions: {
       transformMixedEsModules: true,
     }
-  } 
+  },
+  server: {
+    port: 3003, // Set port to 3003
+  }
 })

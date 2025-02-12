@@ -36,7 +36,7 @@ const cartSlice = createSlice({
     },
     removeFromCart: (state, action) => {
       state.cartItems = state.cartItems.filter((i) => i._id !== action.payload);
-      localStorage.setItem("cartItems", JSON.stringify([...state.cartItems])); // Spread to create a new array
+      localStorage.setItem("cartItems", JSON.stringify([...state.cartItems])); 
     },    
   },
 });

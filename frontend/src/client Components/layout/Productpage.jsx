@@ -47,7 +47,7 @@ const ProductPage = () => {
   
 
   const getImageURL = (filename) =>
-    `http://localhost:5000/api/products/images/${filename}`;
+    `${import.meta.env.VITE_BACKEND_URL}/api/products/images/${filename}`;
 
   const handleAddToCart = (product) => {
     dispatch(addToCart([product]));
@@ -202,6 +202,7 @@ const ProductPage = () => {
                     Add to cart
                   </button>
                   <button
+              onClick={() => handleAddToCart(product)}
                     type="button"
                     className="px-2 py-2 w-[45%] border border-green-600 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold"
                   >
