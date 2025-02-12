@@ -1,14 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import LineChart from '../../charts/LineChart01';
 import { chartAreaGradient } from '../../charts/ChartjsConfig';
 import EditMenu from '../../components/DropdownEditMenu';
-
-// Import utilities
+import {useDispatch, useSelector} from 'react-redux'
+import {fetchTotalOnlineTransaction} from '../../store/reducers/orderslice'
 import { tailwindConfig, hexToRGB } from '../../utils/Utils';
 
 function DashboardCard02() {
+const dispatch=useDispatch()
+const totalOnlineTransaction = useSelector(
+  (state) => state.orders.totalOnlineTransaction
+);
+console.log("Total Transaction:", totalOnlineTransaction.totalAmount);
 
+useEffect(()=>{
+dispatch(fetchTotalOnlineTransaction())
+},[dispatch])
   const chartData = {
     labels: [
       '12-01-2022', '01-01-2023', '02-01-2023',
@@ -98,7 +106,7 @@ function DashboardCard02() {
         </header>
         <div className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase mb-1">Sales</div>
         <div className="flex items-start">
-          <div className="text-3xl font-bold text-gray-800 dark:text-gray-100 mr-2">$17,489</div>
+          <div className="text-3xl font-bold text-gray-800 dark:text-gray-100 mr-2">₹ {Math.round(totalOnlineTransaction.totalAmount)}</div>
           <div className="text-sm font-medium text-red-700 px-1.5 bg-red-500/20 rounded-full">-14%</div>
         </div>
       </div>

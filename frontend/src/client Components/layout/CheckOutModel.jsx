@@ -2,8 +2,11 @@ import React, { useState, useEffect } from "react";
 import Payment from "./Payment";
 import AddressForm from "./AddressForm";
 import OrderConfirmSuccessMessage from "./OrderConfirmSuccessMessage";
+import { myOrders } from "../../store/reducers/userReducers";
+import { useDispatch } from "react-redux";
 
 function CheckOutModel({ handleCloseModal, totalAmount, quantities }) {
+  const dispatch=useDispatch()
   const [currentStep, setCurrentStep] = useState(0);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const [shippingAddress, setShippingAddress] = useState({
@@ -27,7 +30,7 @@ function CheckOutModel({ handleCloseModal, totalAmount, quantities }) {
 
   const handlePaymentSuccess = () => {
     setPaymentSuccess(true);
-    setCurrentStep(2); // Automatically move to Step 3 after payment
+    setCurrentStep(2); 
   };
 
   const steps = [
@@ -59,7 +62,8 @@ function CheckOutModel({ handleCloseModal, totalAmount, quantities }) {
     if (currentStep === 2) {
       const timer = setTimeout(() => {
         handleCloseModal();
-      }, 5000);
+        dispatch(myOrders())
+      }, 3000);
       return () => clearTimeout(timer);
     }
   }, [currentStep, handleCloseModal]);

@@ -477,7 +477,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
                               </span>
                             </NavLink>
                           </li>
-                          <li className="mb-1 last:mb-0">
+                          {/* <li className="mb-1 last:mb-0">
                             <NavLink
                               end
                               to="https://cruip.com/mosaic/"
@@ -492,7 +492,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
                                 Delivered Orders
                               </span>
                             </NavLink>
-                          </li>
+                          </li> */}
                         </ul>
                       </div>
                     </React.Fragment>

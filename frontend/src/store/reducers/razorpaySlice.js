@@ -16,7 +16,7 @@ export const createOrder = createAsyncThunk(
     try {
       // Axios request to create order
       const response = await axiosInstance.post(
-        "http://localhost:5000/api/razorpay/create-order",
+        `${import.meta.env.VITE_BACKEND_URL}/api/razorpay/create-order`,
         { amount }
       );
 
@@ -35,7 +35,7 @@ export const verifyPayment = createAsyncThunk(
     try {
       // Axios request to verify payment
       const response = await axiosInstance.post(
-        "http://localhost:5000/api/razorpay/verify-payment",
+        `${import.meta.env.VITE_BACKEND_URL}/api/razorpay/verify-payment`,
         paymentData
       );
 

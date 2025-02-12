@@ -19,7 +19,7 @@ function ClientOrderHistoryModal({ handleCloseModal, data }) {
   }, [dispatch, data]);
   console.log("pop", data);
   const getImageURL = (filename) =>
-    `http://localhost:5000/api/products/images/${filename}`;
+    `${import.meta.env.VITE_BACKEND_URL}/api/products/images/${filename}`;
 
   return (
     <>

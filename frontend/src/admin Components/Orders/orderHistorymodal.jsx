@@ -17,7 +17,7 @@ function OrderHistorymodal({ handleCloseModal, order }) {
   }, [dispatch]);
 
   const getImageURL = (filename) =>
-    `http://localhost:5000/api/products/images/${filename}`;
+    `${import.meta.env.VITE_BACKEND_URL}/api/products/images/${filename}`;
 
   const handleStatusChange = (e) => {
     setSelectedStatus(e.target.value);

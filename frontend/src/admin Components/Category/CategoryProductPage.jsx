@@ -41,7 +41,7 @@ const CategoryProductPage = () => {
   // Filter products based on the selected category
   const filteredProducts = products.filter(product => product.category && product.category._id === selectedCategory);
   const getImageURL = (filename) => {
-    return `http://localhost:5000/api/products/images/${filename}`;
+    return `${import.meta.env.VITE_BACKEND_URL}/api/products/images/${filename}`;
   };
   return (
     <div>

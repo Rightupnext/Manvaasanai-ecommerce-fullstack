@@ -44,7 +44,7 @@ function ProductDisplay() {
 
   // Function to generate product image URL
   const getImageURL = (filename) =>
-    `http://localhost:5000/api/products/images/${filename}`;
+    `${import.meta.env.VITE_BACKEND_URL}/api/products/images/${filename}`;
 
   return (
     <>

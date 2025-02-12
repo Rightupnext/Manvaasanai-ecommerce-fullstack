@@ -35,7 +35,7 @@ function Menu() {
       : products.filter((product) => product.category && product.category._id === selectedCategory);
 
   const getImageURL = (filename) => {
-    return `http://localhost:5000/api/products/images/${filename}`;
+    return `${import.meta.env.VITE_BACKEND_URL}/api/products/images/${filename}`;
   };
 
   return (
@@ -128,7 +128,7 @@ function Menu() {
           <div>
             <div className="flex gap-2">
               <h5 className="text-base font-bold text-gray-800">{product.title}</h5>
-              <h6 className="text-base text-gray-800 font-bold ml-auto">₹{product.price}</h6>
+              <h6 className="text-base text-gray-800 font-bold ml-auto">₹{product.discountprice}</h6>
             </div>
             <p className="text-gray-500 text-[13px] mt-2 truncate">
               <strong>குறிப்பு : </strong>

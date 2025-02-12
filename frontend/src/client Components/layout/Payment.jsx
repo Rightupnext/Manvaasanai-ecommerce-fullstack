@@ -23,7 +23,7 @@ const Payment = ({ totalAmount, quantities,setCurrentStep }) => {
   const loadRazorpay = async () => {
     const shippingAddress = JSON.parse(localStorage.getItem("manvaasanai_Shipping_Address"));
     try {
-      // Dispatch createOrder to create Razorpay order
+
       const action = await dispatch(createOrder(totalAmount));
       if (action.meta.requestStatus === "fulfilled") {
         const { id, amount, } = action.payload;
@@ -36,10 +36,10 @@ const Payment = ({ totalAmount, quantities,setCurrentStep }) => {
           description: "Test Transaction",
           order_id: id,
           handler: async (response) => {
-            // Dispatch verifyPayment to verify the payment
+
             const verifyAction = await dispatch(verifyPayment(response));
             if (verifyAction.payload.status === "success") {
-              // Dispatch placeOrder if payment is successful
+             
               await dispatch(placeOrder({
                 products: products,
                 amount: totalAmount,
@@ -61,7 +61,7 @@ const Payment = ({ totalAmount, quantities,setCurrentStep }) => {
           theme: { color: "#3399cc" },
         };
 
-        // Open Razorpay payment modal
+
         const razor = new window.Razorpay(options);
         razor.open();
       }
