@@ -35,7 +35,7 @@ function Menu() {
       : products.filter((product) => product.category && product.category._id === selectedCategory);
 
   const getImageURL = (filename) => {
-    return `${import.meta.env.VITE_BACKEND_URL}/api/products/images/${filename}`;
+    return `http://localhost:5000/api/products/images/${filename}`;
   };
 
   return (
@@ -47,7 +47,8 @@ function Menu() {
               <h2 className="text-4xl font-bold text-gray-800 text-green-500">Menu</h2>
               <p className="mt-2 text-lg text-gray-700">Explore Our Best Menu</p>
             </div>
-            <div className="flex justify-center space-x-4 mb-10">
+            <div className="flex flex-wrap justify-center gap-4 mb-10">
+
               <button
                 onClick={() => setSelectedCategory("all")}
                 className={`px-4 py-2 border rounded ${
@@ -128,7 +129,7 @@ function Menu() {
           <div>
             <div className="flex gap-2">
               <h5 className="text-base font-bold text-gray-800">{product.title}</h5>
-              <h6 className="text-base text-gray-800 font-bold ml-auto">₹{product.discountprice}</h6>
+              <h6 className="text-base text-gray-800 font-bold ml-auto">₹{product.price}</h6>
             </div>
             <p className="text-gray-500 text-[13px] mt-2 truncate">
               <strong>குறிப்பு : </strong>
