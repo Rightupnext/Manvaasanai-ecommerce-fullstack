@@ -15,7 +15,7 @@ import "./charts/ChartjsConfig";
 import Dashboard from "./pages/Dashboard";
 import Home from "./client Components/Components/Home";
 import Navbar from "./client Components/Pages/Navbar";
-import SignIn from "./client Components/Components/signIn";
+import SignIn from "./client Components/Components/SignIn";
 import SignUp from "./client Components/Components/SignUp";
 import Layout from "./client Components/layout/Layout";
 import ProductDisplay from "./client Components/layout/ProductDisplay";
