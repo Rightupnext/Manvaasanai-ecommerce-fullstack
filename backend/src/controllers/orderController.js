@@ -6,9 +6,8 @@ const Product = require("../models/Product");
 exports.placeOrder = async (req, res) => {
   try {
     const { products, shippingAddress, paymentId, amount } = req.body;
-    console.log("order creation", products, shippingAddress, paymentId, amount);
-    const { fullName, street, city, state, phoneNumber, postalCode } =
-      shippingAddress;
+    const { fullName, street, city, state, phoneNumber, postalCode } = shippingAddress;
+    // Validate shipping address
     if (
       !fullName ||
       !street ||
@@ -17,15 +16,15 @@ exports.placeOrder = async (req, res) => {
       !phoneNumber ||
       !postalCode
     ) {
-      return res
-        .status(400)
-        .json({ message: "All shipping address fields are required." });
+      return res.status(400).json({ message: "All shipping address fields are required." });
     }
 
+    // Validate products array
     if (!Array.isArray(products) || products.length === 0) {
       return res.status(400).json({ message: "Products array is required." });
     }
 
+    // Validate each product
     for (let i = 0; i < products.length; i++) {
       if (!products[i].product) {
         return res
@@ -36,6 +35,7 @@ exports.placeOrder = async (req, res) => {
       }
     }
 
+    // Create the order
     const order = new Order({
       user: req.user.id,
       products,
@@ -49,10 +49,19 @@ exports.placeOrder = async (req, res) => {
       },
       amount,
       paymentId,
+      status: "Pending",  // Initial status set to Pending
+      statusHistory: [
+        {
+          status: "Pending",  // Initial status
+          updatedAt: new Date(),  // Timestamp when the order is created
+        },
+      ],
     });
 
+    // Save the order to the database
     await order.save();
 
+    // Respond with success
     res.status(201).json({ message: "Order placed successfully", order });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -73,24 +82,22 @@ exports.getAllOrders = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
 exports.updateOrderStatus = async (req, res) => {
   try {
     const orderId = req.params.id;
     const { status } = req.body;
 
-    // Validate if the status is a valid status
     const validStatuses = ["Pending", "Packed", "Shipped", "Delivered"];
     if (!validStatuses.includes(status)) {
       return res.status(400).json({ message: "Invalid status" });
     }
 
-    // Get the order
     const order = await Order.findById(orderId);
     if (!order) {
       return res.status(404).json({ message: "Order not found" });
     }
 
-    // Check if the order's status can be updated to the requested status
     const statusOrder = validStatuses.indexOf(order.status);
     const statusNew = validStatuses.indexOf(status);
 
@@ -100,8 +107,11 @@ exports.updateOrderStatus = async (req, res) => {
         .json({ message: `Cannot move to ${status} from ${order.status}` });
     }
 
-    // Update the status
     order.status = status;
+    order.statusHistory.push({
+      status,
+      updatedAt: new Date(),
+    });
     await order.save();
 
     res

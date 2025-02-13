@@ -80,9 +80,9 @@ function Menu() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-xl:gap-4 gap-6 min-h-[200px]">
   {productsLoading ? (
-    <div className="flex items-center justify-center w-full h-[200px]">
+    <div className="flex items-center justify-center w-full h-[200px]  ">
       <svg
-        className="text-gray-300 animate-spin"
+        className="text-gray-300 animate-spin "
         viewBox="0 0 64 64"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

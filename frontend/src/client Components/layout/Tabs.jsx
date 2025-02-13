@@ -12,7 +12,7 @@ function Tabs({product}) {
         <li
           className={`tab flex items-center justify-center font-bold text-[15px] py-3.5 px-7 border-b-2 cursor-pointer ${
             activeTab === "nutritional"
-              ? "text-blue-600 bg-blue-50 border-blue-600"
+              ? "text-green-600 bg-blue-50 border-green-600"
               : "text-gray-600 border-gray-300"
           }`}
           onClick={() => setActiveTab("nutritional")}
@@ -32,7 +32,7 @@ function Tabs({product}) {
         <li
           className={`tab flex items-center justify-center font-bold text-[15px] py-3.5 px-7 border-b-2 cursor-pointer ${
             activeTab === "reviews"
-              ? "text-blue-600 bg-blue-50 border-blue-600"
+              ? "text-green-600 bg-blue-50 border-green-600"
               : "text-gray-600 border-gray-300"
           }`}
           onClick={() => setActiveTab("reviews")}

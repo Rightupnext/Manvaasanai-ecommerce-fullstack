@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import axiosInstance from "../../store/axios";
+import {notification} from 'antd'
 export default function FeedBackForm({ setReviewShow, handlecloseModal }) {
   const { title } = useParams();
   const [formData, setFormData] = useState({
@@ -26,24 +27,33 @@ export default function FeedBackForm({ setReviewShow, handlecloseModal }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const response = await axiosInstance.post("/api/products/reviews", {
         productId: title,
         comment: formData.testimonial,
         rating: formData.rating,
       });
-
-
-        setReviewShow("");
-        setFormData({ testimonial: "", rating: 0 });
-        handlecloseModal();
-      
+  
+      notification.success({
+        message: "Review Submitted",
+        description: response.data?.message || "Your review has been successfully submitted.",
+        duration: 3,
+      });
+  
+      setReviewShow("");
+      setFormData({ testimonial: "", rating: 0 });
+      handlecloseModal();
     } catch (error) {
       handlecloseModal();
-      console.error("Error submitting feedback:", error);
+  
+      notification.warning({
+        message: "Submission Failed",
+        description: error.response?.data?.message || "An error occurred while submitting your review.",
+        duration: 3,
+      });
     }
   };
+  
 
   return (
     <div className="fixed inset-0 p-4 flex flex-wrap justify-center items-center w-full h-full z-[1000] before:fixed before:inset-0 before:w-full before:h-full before:bg-[rgba(0,0,0,0.5)] overflow-auto font-[sans-serif]">

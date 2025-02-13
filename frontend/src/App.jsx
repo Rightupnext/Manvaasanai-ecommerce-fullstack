@@ -32,6 +32,7 @@ import AddToCartPage from "./client Components/layout/addToCartPage";
 import NotificationModal from "./client Components/layout/NotificationModal";
 import ShippingAndTaxForm from "./admin Components/TaxandShipping/ShippingAndTaxForm";
 import NewOrdersHistory from "./admin Components/Orders/NewOrdersHistory";
+import Contact from "./client Components/Components/Contact";
 
 function App() {
   const location = useLocation();
@@ -56,6 +57,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/contact-us" element={<Contact />} />
 
         {/* Public Layout */}
         <Route path="/" element={<Layout />}>

@@ -6,21 +6,19 @@ const Orders = require('../models/orders');
 const Product = require('../models/Product'); 
 const SECRET_KEY = "your_secret_key";
 
-// Register
 exports.register = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
 
-    // Check if user exists
     if (await User.findOne({ email })) {
-      return res.status(400).json({ message: 'Email already exists' });
+      return res.status(400).json({ message: 'This email is already registered. Please log in or use a different email.' });
     }
 
     const user = new User({ name, email, password, role });
     await user.save();
-    res.status(201).json({ message: 'User registered successfully' });
+    res.status(201).json({ message: 'Registration successful! You can now log in.' });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ message: 'An error occurred while registering. Please try again later.', error: error.message });
   }
 };
 
@@ -31,17 +29,18 @@ exports.login = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user || !(await user.comparePassword(password))) {
-      return res.status(401).json({ message: 'Invalid credentials' });
+      return res.status(401).json({ message: 'Invalid email or password. Please try again.' });
     }
 
     const token = jwt.sign({ id: user._id, role: user.role }, SECRET_KEY, { expiresIn: '1d' });
 
     res.json({ 
+    message: 'Login successful! Welcome back.',
       token,
-      role: user.role // Sending the role in the response
+      role: user.role
     });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ message: 'An error occurred while logging in. Please try again later.', error: error.message });
   }
 };
 
