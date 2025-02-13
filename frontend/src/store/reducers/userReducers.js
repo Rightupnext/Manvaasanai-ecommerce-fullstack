@@ -1,15 +1,26 @@
 // src/features/authSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from '../axios';
-
+import {notification} from 'antd'
 // Async thunk for user registration
 export const registerUser = createAsyncThunk(
   'auth/registerUser',
   async (userData, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.post('api/auth/register', userData);
+      notification.success({
+        message: 'Registration Successful',
+        description: response.data?.message || 'Your account has been created successfully!',
+        duration: 3,
+      });
+    
       return response.data;
     } catch (error) {
+      notification.error({
+        message: 'Registration Failed',
+        description: error.response?.data?.message || 'Something went wrong. Please try again!',
+        duration: 3,
+      });
       return rejectWithValue(error.response ? error.response.data : error.message);
     }
   }
@@ -23,8 +34,21 @@ export const loginUser = createAsyncThunk(
       const response = await axiosInstance.post('api/auth/login', loginData);
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('role', response.data.role);
+      notification.success({
+        message: 'Login Successful',
+        description: response.data?.message || 'You have successfully logged in!',
+        duration: 3,
+      });
+    
+    
+      
       return response.data;
     } catch (error) {
+      notification.error({
+        message: 'Login Failed',
+        description: error.response?.data?.message || 'Invalid credentials. Please try again!',
+        duration: 3,
+      });
       return rejectWithValue(error.response ? error.response.data : error.message);
     }
   }

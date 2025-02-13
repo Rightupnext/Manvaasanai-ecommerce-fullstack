@@ -29,6 +29,15 @@ const orderSchema = new mongoose.Schema({
     enum: ['Pending', 'Packed', 'Shipped', 'Delivered'],
     default: 'Pending',
   },
+  statusHistory: [
+    {
+      status: {
+        type: String,
+        enum: ['Pending', 'Packed', 'Shipped', 'Delivered'],
+      },
+      updatedAt: { type: Date, default: Date.now },
+    }
+  ],
   createdAt: { type: Date, default: Date.now },
 });
 

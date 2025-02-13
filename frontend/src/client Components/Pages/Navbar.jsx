@@ -75,9 +75,9 @@ function Navbar() {
             <ul className="flex flex-col items-center w-full md:flex-row md:justify-end md:space-x-4">
               {[
                 { label: "Home", link: "/" },
-                { label: "About Us", link: "/about-us" },
+                // { label: "About Us", link: "/about-us" },
                 { label: "Our Menu", link: "/products" },
-                { label: "Contact Us", link: "/contact" },
+                { label: "Contact Us", link: "/contact-us" },
               ].map((item, index) => (
                 <React.Fragment key={index}>
                   <li

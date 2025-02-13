@@ -171,29 +171,21 @@ exports.getImage = async (req, res) => {
 // Add a review to a product
 exports.addReview = async (req, res) => {
   try {
-    const { productId, rating, comment } = req.body; // These should be in the request body as an object
-    const userId = req.user.id; // Assuming `userId` is retrieved from the authentication middleware
-
-    // Debugging log
-    console.log("Review details:", { productId, rating, comment, userId });
-
-    // Validate the data
+    const { productId, rating, comment } = req.body; 
+    const userId = req.user.id;
     if (!productId || !rating || !comment) {
       return res.status(400).json({ message: 'All fields are required' });
     }
 
-    // Validate rating (assuming it should be between 1 and 5)
     if (rating < 1 || rating > 5) {
       return res.status(400).json({ message: 'Rating must be between 1 and 5' });
     }
 
-    // Find the product to add the review to
     const product = await Product.findById(productId);
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
 
-    // Check if the user has already reviewed this product
     const existingReview = product.reviews.find(
       (review) => review.user.toString() === userId.toString()
     );
@@ -201,7 +193,6 @@ exports.addReview = async (req, res) => {
       return res.status(409).json({ message: 'You have already reviewed this product' });
     }
 
-    // Create the review object
     const newReview = {
       user: userId,
       comment,
@@ -209,11 +200,8 @@ exports.addReview = async (req, res) => {
       date: new Date(),
     };
 
-    // Add the review to the product's reviews array
     product.reviews.push(newReview);
-    await product.save();  // Ensure saving is awaited
-
-    // Send success response with the new review and the updated product
+    await product.save(); 
     return res.status(201).json({ message: 'Review added successfully', review: newReview, product });
 
   } catch (error) {
@@ -224,23 +212,18 @@ exports.addReview = async (req, res) => {
 
 exports.getReviews = async (req, res) => {
   try {
-    const { productId } = req.params; // Retrieve productId from URL parameters
-
-    // Find the product by its ID
-    const product = await Product.findById(productId).populate('reviews.user', 'name email'); // Populate user data if needed
+    const { productId } = req.params; 
+    const product = await Product.findById(productId).populate('reviews.user', 'name email');
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
 
-    // Extract reviews from the product
     const reviews = product.reviews;
 
-    // Calculate the average rating (rounded to 2 decimal places)
     const totalReviews = reviews.length;
     const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
     const averageRating = (totalRating / totalReviews).toFixed(2);
 
-    // Calculate the rating breakdown (5, 4, 3, 2, 1-star)
     const ratingBreakdown = {
       5: reviews.filter((review) => review.rating === 5).length,
       4: reviews.filter((review) => review.rating === 4).length,
@@ -249,18 +232,16 @@ exports.getReviews = async (req, res) => {
       1: reviews.filter((review) => review.rating === 1).length,
     };
 
-    // Calculate total reviews count (just sum of all ratings)
     const totalReviewsCount = {
       5: ratingBreakdown[5],
       4: ratingBreakdown[4],
       3: ratingBreakdown[3],
       2: ratingBreakdown[2],
       1: ratingBreakdown[1],
-      totalReviews: totalReviews, // Total reviews
-      averageRating: averageRating, // Average rating
+      totalReviews: totalReviews, 
+      averageRating: averageRating, 
     };
 
-    // Return the reviews along with the calculated data
     return res.status(200).json({
       reviews: reviews,
       ratingBreakdown: ratingBreakdown,

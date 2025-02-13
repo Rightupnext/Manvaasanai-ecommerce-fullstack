@@ -169,9 +169,9 @@ const ProductPage = () => {
                   <p className="text-sm text-gray-500">50 Reviews</p>
                 </div>
                 <div className="mt-2">
-                  <p className="text-gray-500 mt-1 text-sm">
+                  <p className="text-gray-500 mt-1 text-sm  text-justify">
                     <strong>Description : </strong>
-                    {product.description}
+                 {product.description}
                   </p>
                 </div>
                 <div className="flex items-center flex-wrap gap-2 mt-4">
