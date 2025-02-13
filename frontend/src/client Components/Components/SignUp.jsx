@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FaLock, FaLockOpen } from "react-icons/fa"; 
-import logo from "../../images/assets/brahmmis logo recreate.png"
+import Logo from '../../images/assets/brahmmis logo recreate.png'
 import loginImg from "../../images/assets/login-img.jpg"
 import { registerUser } from "../../store/reducers/userReducers";
 import { Link, useNavigate } from "react-router-dom";
@@ -62,13 +62,13 @@ const navigate=useNavigate()
         className="hidden lg:flex lg:w-1/2 items-center justify-center bg-gray-100 bg-cover bg-center"
         style={{ backgroundImage: `url(${loginImg})` }}
       >
-        <img src={logo} alt="Brahmmis Logo" style={{ width: "30%" }} />
+        {/* <img src={logo} alt="Brahmmis Logo" style={{ width: "30%" }} /> */}
       </div>
 
 
         <div className="w-full p-8 lg:w-1/2">
-       
-
+        <img src={Logo} className="w-[110px] justify-center m-auto"/>
+        <p className="text-xl text-gray-600 text-center">Welcome back!</p>
 
 
           <form onSubmit={handleSubmit}>
