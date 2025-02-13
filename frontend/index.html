@@ -4,24 +4,25 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/brahmmis.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="title" content="Kovai Mannvasanai" />
-    <meta name="description" content="Experience the essence of Kovai Mannvaasanai through authentic products and traditions." />
-    <meta name="keywords" content="Kovai, Mannvaasanai, Tamil culture, authentic products" />
-    <meta name="author" content="Ultrafly" />
-    
-    <meta property="og:title" content="Kovai Mannvaasanai" />
-    <meta property="og:description" content="Experience the essence of Kovai Mannvaasanai through authentic products and traditions." />
-    <meta property="og:image" content="/images/kovai-mannvaasanai.jpg" />
-    <meta property="og:url" content="https://yourwebsite.com" />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Kovai Mannvaasanai" />
-    <meta name="twitter:description" content="Experience the essence of Kovai Mannvaasanai through authentic products and traditions." />
-    <meta name="twitter:image" content="/images/kovai-mannvaasanai.jpg" />
-
-    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="title" content="Kovai Mannvasanai"/>
     <title>Kovai Mannvasanai</title>
+    <meta charset="UTF-8" />
+  <meta name="description" content="Experience the essence of Kovai Mannvaasanai through authentic products and traditions." />
+  <meta name="keywords" content="Kovai, Mannvaasanai, Tamil culture, authentic products" />
+  <meta name="author" content="Ultrafly" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <meta property="og:title" content="Kovai Mannvaasanai" />
+  <meta property="og:description" content="Experience the essence of Kovai Mannvaasanai through authentic products and traditions." />
+  <meta property="og:image" content="/images/kovai-mannvaasanai.jpg" />
+  <meta property="og:url" content="https://yourwebsite.com" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Kovai Mannvaasanai" />
+  <meta name="twitter:description" content="Experience the essence of Kovai Mannvaasanai through authentic products and traditions." />
+  <meta name="twitter:image" content="/images/kovai-mannvaasanai.jpg" />
+  <link rel="manifest" href="/site.webmanifest" />
+    <title>Vite App</title>
     <script>
       if (localStorage.theme === 'dark' || !('theme' in localStorage)) {
         document.querySelector('html').classList.add('dark');
@@ -30,11 +31,10 @@
         document.querySelector('html').classList.remove('dark');
         document.querySelector('html').style.colorScheme = 'light';
       }        
-    </script>
+    </script>      
   </head>
   <body class="font-inter antialiased bg-gray-100 dark:bg-gray-900 text-gray-600 dark:text-gray-400">
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    
     <script>
         if (localStorage.getItem('sidebar-expanded') == 'true') {
             document.querySelector('body').classList.add('sidebar-expanded');
@@ -42,9 +42,7 @@
             document.querySelector('body').classList.remove('sidebar-expanded');
         }
     </script>  
-
-    <!-- Uncomment Razorpay script if using -->
-    <!-- <script src="https://checkout.razorpay.com/v1/checkout.js"></script> -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
  
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
