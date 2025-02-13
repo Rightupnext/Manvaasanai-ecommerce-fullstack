@@ -154,7 +154,7 @@ const navigate=useNavigate()
 
             <div className="form-check d-flex justify-content-center mb-5">
               <input
-                className="form-check-input me-2"
+                 className={!termsAccepted ? "border-red-500 form-check-input me-2 border-2 ring-red-500" : "form-check-input me-2"}
                 type="checkbox"
                 checked={termsAccepted}
                 onChange={() => setTermsAccepted(!termsAccepted)}
@@ -162,12 +162,12 @@ const navigate=useNavigate()
               />
               <label className="form-check-label text-black-500 hover:text-blue-700 text-xs" htmlFor="form2Example3g">
                 I agree to the{" "}
-                <a 
+                <Link to='/signup'
                   href="#!" 
                   className="text-blue-500 hover:text-blue-700 text-xs"
                 >
                   <u>Terms & Conditions</u>
-                </a>
+                </Link>
 
               </label>
             </div>
@@ -186,7 +186,7 @@ const navigate=useNavigate()
           </form>
           <div className="mt-4 flex items-center justify-between">
             <span className="border-b w-1/5 md:w-1/4" />
-            <Link to="/signin" className="text-xs text-gray-500 uppercase">
+            <Link to="/signin" className="text-xs text-green-400 uppercase font-extrabold hover:underline underline-offset-[5px] hover:border-b-2 border-green-400">
               or Sign in
             </Link>
             <span className="border-b w-1/5 md:w-1/4" />

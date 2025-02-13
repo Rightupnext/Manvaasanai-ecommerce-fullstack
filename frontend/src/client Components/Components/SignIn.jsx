@@ -5,6 +5,7 @@ import loginImg from "../../images/assets/login-img.jpg"
 import { FaLock, FaLockOpen } from "react-icons/fa"; 
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import Logo from '../../images/assets/brahmmis logo recreate.png'
 export default function SignIn() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -69,9 +70,7 @@ export default function SignIn() {
        
        
         <div className="w-full p-8 lg:w-1/2">
-          <h2 className="text-2xl font-semibold text-gray-700 text-center">
-            Brand
-          </h2>
+          <img src={Logo} className="w-[110px] justify-center m-auto"/>
           <p className="text-xl text-gray-600 text-center">Welcome back!</p>
 
           <form onSubmit={handleSubmit}>
@@ -116,21 +115,22 @@ export default function SignIn() {
           </div>
 
             <div className="form-check d-flex justify-content-center mb-5">
-              <input
-                className="form-check-input me-2"
-                type="checkbox"
-                checked={termsAccepted}
-                onChange={() => setTermsAccepted(!termsAccepted)}
-                id="form2Example3cg"
-              />
+            <input
+  className={!termsAccepted ? "border-red-500 form-check-input me-2 border-2 ring-red-500" : "form-check-input me-2"}
+  type="checkbox"
+  checked={termsAccepted}
+  onChange={() => setTermsAccepted(!termsAccepted)}
+  id="form2Example3cg"
+/>
+
               <label className="form-check-label text-black-500 hover:text-blue-700 text-xs" htmlFor="form2Example3g">
                 I agree to the{" "}
-                <a 
-                  href="#!" 
+                <Link 
+                  href="/signin" 
                   className="text-blue-500 hover:text-blue-700 text-xs"
                 >
                   <u>Terms & Conditions</u>
-                </a>
+                </Link>
 
               </label>
             </div>
@@ -138,7 +138,9 @@ export default function SignIn() {
               <button
                 type="submit"
                 disabled={status === "pending" || !termsAccepted}
-                className="bg-gray-700 text-white font-bold py-1 px-3 w-full rounded hover:bg-gray-600"
+                className={`${
+                  !termsAccepted ? "bg-gray-300 text-white font-bold py-1 px-3 w-full rounded cursor-not-allowed" : "bg-gray-700 text-white font-bold py-1 px-3 w-full rounded hover:bg-gray-600"
+                  }`}
               >
                 {status === "pending" ? "Logging in..." : "Sign In"}
               </button>
@@ -146,7 +148,7 @@ export default function SignIn() {
           </form>
           <div className="mt-4 flex items-center justify-between">
             <span className="border-b w-1/5 md:w-1/4" />
-            <Link to="/signup" className="text-xs text-gray-500 uppercase">
+            <Link to="/signup" className="text-xs text-green-400 uppercase font-extrabold hover:underline underline-offset-[5px] hover:border-b-2 border-green-400">
               or sign up
             </Link>
             <span className="border-b w-1/5 md:w-1/4" />
