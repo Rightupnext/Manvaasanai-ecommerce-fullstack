@@ -1,4 +1,4 @@
-const ShippingAndTax = require("../models/ShippingAndTax");
+const ShippingAndTax = require("../models/shippingAndTax");
 
 // Create shipping and tax
 
