@@ -47,7 +47,7 @@ const CategoriesList = () => {
             <li key={cat._id} className="flex items-center justify-between border-b pb-2">
               <span>{cat.name}</span>
               <div className="flex space-x-3">
-                <Link to={`/category/edit/${cat._id}`} className="text-blue-500 hover:text-blue-700">
+                <Link to={`edit/${cat._id}`} className="text-blue-500 hover:text-blue-700">
                   <FaEdit size={20} />
                 </Link>
                 <button 
