@@ -27,32 +27,32 @@ function ClientOrderHistory() {
   return (
     <>
 <section className="bg-white py-3 antialiased dark:bg-gray-900 md:py-16 mx-0">
-  <div className="mx-auto max-w-screen-xl overflow-x-auto sm:ml-[5px] sm:mr-[5px] md:ml-[5px] md:mr-[5px]">
-    <div className="min-w-[1200px]">
-      <div className="gap-4 sm:flex ml-[5px] p-[5px] sm:items-center sm:justify-between m-[3px]">
-      <h2 className="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">
+  <div className="mx-auto max-w-screen-xl overflow-hidden sm:px-6 md:px-6 lg:px-8">
+    <div className="w-full">
+      <div className="flex items-center justify-between gap-4 p-4 sm:px-6">
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">
           My orders
         </h2>
       </div>
-      <div className="mt-6 flow-root sm:mt-8 px-8">
+
+     <div className="mt-6 flow-root sm:mt-8 sm:px-2.5">
   <div className="divide-y divide-gray-200 dark:divide-gray-700">
     {Array.isArray(data?.orders) && data?.orders.length > 0 ? (
       [...data.orders].reverse().map((order, index) => (
-        <div key={index} className="w-full flex flex-wrap lg:flex-nowrap justify-between items-center gap-6 py-6">
-          <dl className="min-w-[150px] flex-1">
+        <div
+          key={index}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 items-center py-6 lg:w-full xl:w-full"
+        >
+          <div className="flex-1">
             <dt className="text-base font-medium text-gray-500 dark:text-gray-400">
               Order ID:
             </dt>
             <dd className="mt-1.5 text-base font-semibold text-gray-900 dark:text-white">
-              <p className="truncate sm:w-20 md:w-20 lg:w-auto xl:w-auto">
-                <span className="sm:inline md:inline lg:hidden xl:hidden">
-                  {order._id.length > 5 ? `${order._id.slice(0, 5)}...` : order._id}
-                </span>
-                <span className="hidden lg:inline xl:inline">{order._id}</span>
-              </p>
+              {order._id}
             </dd>
-          </dl>
-          <dl className="min-w-[200px] flex-1">
+          </div>
+
+          <div className="flex-1">
             <dt className="text-base font-medium text-gray-500 dark:text-gray-400">
               Order Date:
             </dt>
@@ -68,21 +68,23 @@ function ClientOrderHistory() {
                 hour12: true,
               })}
             </dd>
-          </dl>
-          <dl className="min-w-[150px] flex-1">
+          </div>
+
+          <div className="flex-1">
             <dt className="text-base font-medium text-gray-500 dark:text-gray-400">
               Payment Type:
             </dt>
             <dd className="mt-1.5 text-base font-semibold text-gray-900 dark:text-white">
               ₹{order.paymentType}
             </dd>
-          </dl>
-          <dl className="min-w-[150px] flex-1">
+          </div>
+
+          <div className="flex-1">
             <dt className="text-base font-medium text-gray-500 dark:text-gray-400">
               Order Status:
             </dt>
             <dd
-              className={`me-2 mt-1.5 inline-flex items-center rounded px-2.5 py-0.5 text-xs font-medium
+              className={`mt-1.5 inline-flex items-center rounded px-2.5 py-0.5 text-xs font-medium
                 ${order.status === "Pending" ? "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300" : ""}
                 ${order.status === "Packed" ? "bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-300" : ""}
                 ${order.status === "Shipped" ? "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300" : ""}
@@ -91,11 +93,12 @@ function ClientOrderHistory() {
             >
               {order.status}
             </dd>
-          </dl>
-          <div className="min-w-[120px] flex-1">
+          </div>
+
+          <div className="flex-1">
             <button
               onClick={() => handleOpenModal(order)}
-              className="w-full lg:w-auto inline-flex justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
+              className="max-w-[150px] lg:max-w-[200px] inline-flex justify-center rounded-lg border border-gray-300 bg-gray-100 px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200 focus:z-10 focus:outline-none focus:ring-4 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
             >
               View details
             </button>
@@ -103,16 +106,16 @@ function ClientOrderHistory() {
         </div>
       ))
     ) : (
-      <p>No orders available.</p>
+      <p className="text-gray-500 dark:text-gray-400 text-center py-4">
+        No orders available.
+      </p>
     )}
   </div>
 </div>
 
-
     </div>
   </div>
 </section>
-
 
 
 
