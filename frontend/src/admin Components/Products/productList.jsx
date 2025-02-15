@@ -17,7 +17,9 @@ const ProductList = () => {
   }, [dispatch]);
 
   const handleDeleteProduct = (id) => {
+    if (window.confirm("Are you sure?")) {
     dispatch(deleteProduct(id));
+    }
   };
 
   const getImageURL = (filename) => {

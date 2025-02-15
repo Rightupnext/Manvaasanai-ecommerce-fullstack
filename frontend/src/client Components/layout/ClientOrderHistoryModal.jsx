@@ -227,7 +227,7 @@ const ClientOrderHistoryModal = ({ handleCloseModal, data }) => {
                     <p className="text-sm text-gray-600 mb-2">
                       {item.description}
                     </p>
-                    {item.status === "Shipped" && (
+                    {data?.status=== "Shipped" && (
                       <p className="text-sm text-gray-600">
                         Tracking Number:{" "}
                         <span className="font-medium">{data._id}</span>
@@ -282,7 +282,7 @@ const ClientOrderHistoryModal = ({ handleCloseModal, data }) => {
                 Contact our customer support
               </p>
             </div>
-            <Link to="https://wa.me/918870566255">
+            <Link to="https://wa.me/918870566255" target="_blank">
               <button
                 className="flex items-center px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors w-full sm:w-auto justify-center sm:justify-start"
                 aria-label="Contact Support"

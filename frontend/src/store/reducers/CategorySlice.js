@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../axios";
-
+import {notification} from 'antd'
 // Add Category
 export const addCategory = createAsyncThunk(
   "category/addCategory",
@@ -10,20 +10,46 @@ export const addCategory = createAsyncThunk(
         "/api/categories",
         categoryData
       );
+
+      notification.open({
+        message: "Success", 
+        description: response.data?.message || "Category added successfully",
+        type: "success",
+        duration: 3
+      });
+
       return response.data;
     } catch (error) {
+      notification.open({
+        message: "Error",
+        description: error.response?.data?.message || error.message || "An error occurred",
+        type: "error",
+        duration: 3
+      });
+
       return rejectWithValue(error.response?.data || error.message);
     }
   }
 );
+
 // Update Category
 export const updateCategory = createAsyncThunk(
   "category/updateCategory",
   async ({ id, name }, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.put(`/api/categories/${id}`, name);
+      notification.open({
+        type:"success",
+        description:response.data?.message || `Category ${name} is updated`,
+        duration:3
+      })
       return response.data;
     } catch (error) {
+      notification.open({
+        type:"error",
+        description:error.response?.data || error.message ||" category is error",
+        duration:3
+      })
       return rejectWithValue(error.response?.data || error.message);
     }
   }
@@ -33,9 +59,19 @@ export const deleteCategory = createAsyncThunk(
   "category/deleteCategory",
   async (id, { rejectWithValue }) => {
     try {
-      await axiosInstance.delete(`/api/categories/${id}`);
+     const response= await axiosInstance.delete(`/api/categories/${id}`);
+      notification.open({
+        type:"success",
+        description:response.data?.message,
+        duration:3
+      })
       return id;
     } catch (error) {
+      notification.open({
+        type:"error",
+        description:error.response?.data || error.message,
+        duration:3
+      })
       return rejectWithValue(error.response?.data || error.message);
     }
   }
