@@ -33,6 +33,10 @@ import NotificationModal from "./client Components/layout/NotificationModal";
 import ShippingAndTaxForm from "./admin Components/TaxandShipping/ShippingAndTaxForm";
 import NewOrdersHistory from "./admin Components/Orders/NewOrdersHistory";
 import Contact from "./client Components/Components/Contact";
+import Terms from "../src/client Components/Components/privacy/Terms";
+import Privacy from "../src/client Components/Components/privacy/Privacy";
+import Cancel from "../src/client Components/Components/privacy/Cancel";
+import Shipping from "../src/client Components/Components/privacy/Shipping";
 
 function App() {
   const location = useLocation();
@@ -58,6 +62,12 @@ function App() {
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/contact-us" element={<Contact />} />
+        <Route path="/terms" element={<Terms />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/cancel" element={<Cancel />} />
+          <Route path="/ship" element={<Shipping />} />
+
+
 
         {/* Public Layout */}
         <Route path="/" element={<Layout />}>
