@@ -31,14 +31,14 @@ const Footer = () => {
 
           {/* Useful Links Section */}
           <div>
-            <h4 className="text-lg font-semibold mb-8 text-black">Useful Links</h4>
-            <ul className="space-y-4">
-              <li><a href="#" className="text-black hover:text-white text-sm no-underline">Home</a></li>
-              <li><a href="#about-us" className="text-black hover:text-white text-sm no-underline">About Us</a></li>
-              <li><a href="#our-menu" className="text-black hover:text-white text-sm no-underline">Our Menu</a></li>
-              <li><a href="#specialty" className="text-black hover:text-white text-sm no-underline">Speciality</a></li>
-              <li><a href="#contact" className="text-black hover:text-white text-sm no-underline">Help</a></li>
-              <li><a href="#contact" className="text-black hover:text-white text-sm no-underline">Contact</a></li>
+            <h4 className="text-lg font-semibold mb-8 text-black">Privacy policies</h4>
+            <ul className="space-y-4 mr-20">
+              <li><a href="terms" className="text-black hover:text-white text-sm no-underline">Terms and Conditions</a></li>
+              <li><a href="privacy" className="text-black hover:text-white text-sm no-underline">Privacy Policy</a></li>
+              <li><a href="cancel" className="text-black hover:text-white text-sm no-underline">Cancellation, Return, and Refund Policy</a></li>
+              <li><a href="ship" className="text-black hover:text-white text-sm no-underline">Shipping & Delivery Policy</a></li>
+              {/* <li><a href="#contact" className="text-black hover:text-white text-sm no-underline">Help</a></li> */}
+              {/* <li><a href="#contact" className="text-black hover:text-white text-sm no-underline">Contact</a></li> */}
             </ul>
           </div>
 
