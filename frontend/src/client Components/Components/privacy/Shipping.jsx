@@ -23,7 +23,7 @@ const Shipping = () => {
           2. Delivery Time
         </h2>
         <ul className="list-disc pl-5 text-gray-600 mt-2">
-          <li>Orders are delivered within <strong>1 to 5 days</strong>, depending on the customer's location.</li>
+          <li>Orders are delivered within 2-12 hours, depending on the food item and customer's location.</li>
           <li>Customers will receive tracking updates via email/SMS.</li>
         </ul>
       </section>
