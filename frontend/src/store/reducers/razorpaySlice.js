@@ -12,15 +12,12 @@ const initialState = {
 // 🟢 Create Order Thunk
 export const createOrder = createAsyncThunk(
   "razorpay/createOrder",
-  async (amount, { rejectWithValue }) => {
+  async ({ amount, mobileNumber, name }, { rejectWithValue }) => { // Wrap parameters in an object
     try {
-      // Axios request to create order
       const response = await axiosInstance.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/razorpay/create-order`,
-        { amount }
+        `${import.meta.env.VITE_BACKEND_URL}/api/phonepe/create-order`,
+        { amount, mobileNumber, name }
       );
-
-      // Axios response is already parsed, no need to call .json()
       return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -31,12 +28,12 @@ export const createOrder = createAsyncThunk(
 // 🟢 Verify Payment Thunk
 export const verifyPayment = createAsyncThunk(
   "razorpay/verifyPayment",
-  async (paymentData, { rejectWithValue }) => {
+  async (orderId, { rejectWithValue }) => {
     try {
       // Axios request to verify payment
       const response = await axiosInstance.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/razorpay/verify-payment`,
-        paymentData
+        orderId
       );
 
       return response.data;
