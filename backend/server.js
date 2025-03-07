@@ -33,7 +33,7 @@ app.use('/api/categories', categoryRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/order', orderRoutes);
 app.use('/api/shipping-tax', ShippingAndTax);
-app.use("/api/razorpay", razorpayRoutes);
+app.use("/api/phonepe", razorpayRoutes);
 // Root Endpoint
 app.get('/', (req, res) => {
   res.send('Welcome to the backend API!');

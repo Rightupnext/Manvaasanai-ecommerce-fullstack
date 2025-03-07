@@ -3,7 +3,7 @@ const { createOrder, verifyPayment } = require("../controllers/razorpayControlle
 const {isAuthenticated,allowRoles}=require('../middleware/AuthMiddleware')
 const router = express.Router();
 
-router.post("/create-order",isAuthenticated, createOrder);
-router.post("/verify-payment",isAuthenticated, verifyPayment);
+router.post("/create-order", createOrder);
+router.post("/status", verifyPayment);
 
 module.exports = router;
